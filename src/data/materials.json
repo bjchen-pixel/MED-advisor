@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 2,
+  "dataRevision": "2026-09-11.1",
+  "note": "雙區段。materials[] 只依材質，pairs[] 依（母材 × 等級）。拆開的理由：remainingWall / hFloor 與等級無關，塞進 pairs 會讓每個值重複兩次，改一邊忘一邊就是靜默不一致。注意兩者索引來源不同——remainingWall 查【上件】材質（沉頭底為受力面，凹陷/拉穿發生在上件），hFloor 查【母材】（攻牙深下限）。",
+  "materials": [
+    {
+      "key": "S45C",
+      "remainingWallFactor": 0.30,
+      "remainingWallFloor": 2.0,
+      "hFloorFactor": 1.0,
+      "source": "內規",
+      "sourceRef": "老師裁決 2026-09-11（經驗起始值，待實機回歸校正）",
+      "verified": "unverified",
+      "note": "remainingWall 依上件材質，hFloor 依母材，兩者索引來源不同，勿一起改"
+    },
+    {
+      "key": "6061-T6",
+      "remainingWallFactor": 0.50,
+      "remainingWallFloor": 2.5,
+      "hFloorFactor": 2.0,
+      "source": "內規",
+      "sourceRef": "老師裁決 2026-09-11（經驗起始值，待實機回歸校正）",
+      "verified": "unverified"
+    },
+    {
+      "key": "SUS304",
+      "remainingWallFactor": 0.35,
+      "remainingWallFloor": 2.0,
+      "hFloorFactor": 1.5,
+      "source": "內規",
+      "sourceRef": "老師裁決 2026-09-11（經驗起始值，待實機回歸校正）",
+      "verified": "unverified"
+    }
+  ],
+  "pairs": [
+    {
+      "parentMaterial": "S45C",
+      "grade": "A2-70",
+      "kMin": 1.0,
+      "kCap": 1.5,
+      "flags": [],
+      "rationale": "鋼母材牙強度高於 A2-70 螺絲，破壞模式為螺絲斷裂而非母材崩牙，嵌入需求最低",
+      "source": "內規",
+      "sourceRef": "派工單附錄（待甲方確認）",
+      "verified": "unverified"
+    },
+    {
+      "parentMaterial": "S45C",
+      "grade": "12.9",
+      "kMin": 1.5,
+      "kCap": 2.0,
+      "flags": [],
+      "rationale": "12.9 螺絲強度遠高於 S45C 未熱處理母材（1220 vs 690 MPa），需較深嵌入以避免母材先崩牙",
+      "source": "內規",
+      "sourceRef": "派工單附錄（待甲方確認）",
+      "verified": "unverified"
+    },
+    {
+      "parentMaterial": "6061-T6",
+      "grade": "A2-70",
+      "kMin": 1.5,
+      "kCap": 2.0,
+      "flags": [],
+      "rationale": "鋁母材牙強度低於 A2-70 螺絲（310 vs 700 MPa），需加深嵌入分攤牙載荷",
+      "source": "內規",
+      "sourceRef": "派工單附錄（待甲方確認）",
+      "verified": "unverified"
+    },
+    {
+      "parentMaterial": "6061-T6",
+      "grade": "12.9",
+      "kMin": 2.0,
+      "kCap": 2.5,
+      "flags": ["parent-thread-weaker"],
+      "rationale": "母材牙強度遠低於螺絲（310 vs 1220 MPa），破壞模式為母材崩牙而非螺絲斷裂",
+      "source": "內規",
+      "sourceRef": "派工單附錄（待甲方確認）",
+      "verified": "unverified"
+    },
+    {
+      "parentMaterial": "SUS304",
+      "grade": "A2-70",
+      "kMin": 1.25,
+      "kCap": 1.75,
+      "flags": ["galling-risk"],
+      "rationale": "沃斯田鐵不鏽鋼對不鏽鋼有咬死傾向；嵌入越長咬死機率越高，故 kCap 刻意壓低",
+      "source": "內規",
+      "sourceRef": "派工單附錄（待甲方確認）",
+      "verified": "unverified"
+    },
+    {
+      "parentMaterial": "SUS304",
+      "grade": "12.9",
+      "kMin": 1.5,
+      "kCap": 2.0,
+      "flags": ["galling-risk"],
+      "rationale": "12.9 螺絲強度高於 SUS304 母材（1220 vs 520 MPa），需較深嵌入；但不鏽鋼母材仍有咬死風險",
+      "source": "內規",
+      "sourceRef": "派工單附錄（待甲方確認）",
+      "verified": "unverified"
+    }
+  ]
+}

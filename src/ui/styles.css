@@ -1,0 +1,168 @@
+/* v1 不處理深淺模式（派工單 §3.6）。強制淺色，避免系統深色模式把版面吃掉。 */
+:root {
+  color-scheme: light;
+  --bg: #f6f7f9;
+  --card: #ffffff;
+  --fg: #1a1d21;
+  --muted: #666d77;
+  --line: #d9dee4;
+  --line-soft: #eceff3;
+  --accent: #1b4f8a;
+  --accent-soft: #eaf1f9;
+  --ok-bg: #e8f5ec; --ok-fg: #1c5c33; --ok-line: #9fcfb1;
+  --warn-bg: #fdf3e3; --warn-fg: #7a4e08; --warn-line: #e3bd7e;
+  --err-bg: #fceceb; --err-fg: #8a2018; --err-line: #e3a49e;
+  --mono: "Cascadia Mono", Consolas, "Sarasa Mono TC", ui-monospace, monospace;
+  --sans: Inter, "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.app { max-width: 940px; margin: 0 auto; padding: 24px 20px 64px; }
+
+header.app-head { margin-bottom: 18px; }
+header.app-head h1 { font-size: 19px; margin: 0 0 4px; letter-spacing: -0.01em; }
+header.app-head .sub { font-size: 12px; color: var(--muted); }
+
+section.block {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+section.block > h2 {
+  font-size: 13px;
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* ── 區塊 1：輸入 ─────────────────────────────────────── */
+.fields { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 14px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 12px; color: var(--muted); }
+.field label .req { color: #b3261e; margin-left: 2px; }
+.field select,
+.field input {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+  color: var(--fg);
+}
+.field select:focus, .field input:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+.field select.unset { border-color: #b3261e; background: #fff8f7; }
+.field .hint { font-size: 11px; color: var(--muted); }
+.optional-head {
+  grid-column: 1 / -1;
+  font-size: 11px;
+  color: var(--muted);
+  border-top: 1px dashed var(--line);
+  padding-top: 10px;
+  margin-top: 2px;
+}
+
+/* ── 區塊 2：警示帶 ───────────────────────────────────── */
+.warnings { display: flex; flex-direction: column; gap: 8px; }
+.warn-item {
+  border: 1px solid; border-left-width: 4px; border-radius: 5px;
+  padding: 9px 13px; font-size: 13px;
+}
+.warn-item.warn { background: var(--warn-bg); border-color: var(--warn-line); color: var(--warn-fg); }
+.warn-item.error { background: var(--err-bg); border-color: var(--err-line); color: var(--err-fg); }
+.warn-item .lvl { font-weight: 700; font-size: 11px; letter-spacing: 0.06em; margin-right: 6px; }
+
+/* ── 區塊 3：剖面 ＋ 孔尺寸 ───────────────────────────── */
+.geo { display: grid; grid-template-columns: 300px 1fr; gap: 20px; align-items: start; }
+.section-pane { border: 1px solid var(--line-soft); border-radius: 6px; background: #fcfdfe; padding: 8px; }
+.section-pane svg { display: block; width: 100%; height: auto; }
+.section-meta {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; color: var(--muted); font-family: var(--mono); margin-top: 4px;
+}
+.section-meta .scale.changed { color: var(--accent); font-weight: 700; }
+.section-note { font-size: 11px; color: var(--err-fg); margin-top: 4px; }
+
+table.dims { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.dims th, table.dims td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line-soft); }
+table.dims th { font-size: 11px; color: var(--muted); font-weight: 600; width: 40%; }
+table.dims td { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+table.dims tr:last-child td, table.dims tr:last-child th { border-bottom: none; }
+.tag {
+  display: inline-block; font-size: 10px; padding: 0 5px; border-radius: 8px;
+  border: 1px solid var(--warn-line); background: var(--warn-bg); color: var(--warn-fg);
+  margin-left: 6px; font-family: var(--sans); vertical-align: 1px;
+}
+
+/* ── 區塊 4：候選清單 ─────────────────────────────────── */
+.cand { border: 1px solid var(--line-soft); border-radius: 6px; margin-bottom: 8px; background: #fff; }
+.cand.recommended { border-color: var(--accent); border-width: 2px; }
+.cand.infeasible { opacity: 0.55; }
+.cand-row {
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 9px 12px; cursor: pointer; flex-wrap: wrap;
+}
+.cand-row .len { font-size: 17px; font-weight: 700; font-family: var(--mono); min-width: 54px; }
+.cand-row .len .unit { font-size: 11px; font-weight: 400; color: var(--muted); }
+.pill {
+  font-size: 11px; font-weight: 700; padding: 1px 8px; border-radius: 9px;
+  border: 1px solid currentColor; white-space: nowrap;
+}
+.pill.recommended { color: var(--ok-fg); background: var(--ok-bg); }
+.pill.shallow { color: var(--warn-fg); background: var(--warn-bg); }
+.pill.bottoming { color: var(--err-fg); background: var(--err-bg); }
+.pill.infeasible { color: #4a4f56; background: #eceef1; }
+/* 判準數字：同列直接可見，不折疊、不藏進 tooltip */
+.crit { font-family: var(--mono); font-size: 11.5px; color: var(--muted); display: flex; gap: 10px; flex-wrap: wrap; }
+.crit b { color: var(--fg); font-weight: 600; }
+.cand-row .exp { margin-left: auto; font-size: 11px; color: var(--accent); white-space: nowrap; }
+.cand-detail {
+  border-top: 1px dashed var(--line); padding: 10px 12px;
+  font-size: 12px; background: #fbfcfd;
+}
+.cand-detail h4 { margin: 0 0 5px; font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+.cand-detail ul { margin: 0 0 10px; padding-left: 18px; }
+.cand-detail li { margin: 2px 0; }
+.cand-detail dl { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; margin: 0 0 10px; }
+.cand-detail dt { color: var(--muted); }
+.cand-detail dd { margin: 0; font-family: var(--mono); }
+.cand-detail .src { font-family: var(--sans); color: var(--muted); font-size: 11px; }
+
+.empty { font-size: 13px; color: var(--muted); padding: 6px 0; }
+
+/* ── 區塊 5：標註 ─────────────────────────────────────── */
+.annot { display: flex; gap: 12px; align-items: flex-start; }
+.annot pre {
+  flex: 1; margin: 0; font-family: var(--mono); font-size: 14px;
+  background: #f4f6f8; border: 1px solid var(--line); border-radius: 6px;
+  padding: 11px 13px; white-space: pre; overflow-x: auto;
+}
+button.copy {
+  font-family: inherit; font-size: 13px; padding: 8px 16px;
+  border: 1px solid var(--accent); background: var(--accent); color: #fff;
+  border-radius: 6px; cursor: pointer; white-space: nowrap;
+}
+button.copy:hover { background: #163f6e; }
+button.copy.done { background: var(--ok-fg); border-color: var(--ok-fg); }
+
+footer.app-foot {
+  font-size: 11px; color: var(--muted); font-family: var(--mono);
+  display: flex; gap: 14px; flex-wrap: wrap; padding: 4px 2px;
+}
+footer.app-foot .k { color: #8a919b; }
+
+/* ── 資料庫錯誤畫面 ───────────────────────────────────── */
+.db-error { max-width: 820px; margin: 40px auto; padding: 0 20px; }

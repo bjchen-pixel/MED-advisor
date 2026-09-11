@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "dataRevision": "2026-09-11.1",
+  "profile": "default-conservative",
+  "kind": "default",
+  "label": "保守預設值——非任何廠商或工廠的實際規範",
+  "note": "imperfectPitches 以 pitch 倍數計，因為不完全牙的物理成因（絲攻導程倒角、孔口倒角）本來就以牙數計；寫成 mm 會在規格間失去可比性。H_eff = H − imperfectPitches × pitch。內規值請走 thread-depth.internal.json（gitignored），該檔必須涵蓋本檔完整鍵集。",
+  "rows": [
+    { "screwSize": "M3", "holeType": "blind", "imperfectPitches": 3.0, "clearanceMin": 1.5, "drillAllowance": 2.0, "source": "內規", "sourceRef": "保守估計，非查表值", "verified": "unverified", "note": "入口倒角 1P + 絲攻不完全牙 2P" },
+    { "screwSize": "M4", "holeType": "blind", "imperfectPitches": 3.0, "clearanceMin": 1.5, "drillAllowance": 2.5, "source": "內規", "sourceRef": "保守估計，非查表值", "verified": "unverified", "note": "入口倒角 1P + 絲攻不完全牙 2P" },
+    { "screwSize": "M5", "holeType": "blind", "imperfectPitches": 3.0, "clearanceMin": 1.5, "drillAllowance": 3.0, "source": "內規", "sourceRef": "保守估計，非查表值", "verified": "unverified", "note": "入口倒角 1P + 絲攻不完全牙 2P" },
+    { "screwSize": "M6", "holeType": "blind", "imperfectPitches": 3.0, "clearanceMin": 1.5, "drillAllowance": 4.0, "source": "內規", "sourceRef": "保守估計，非查表值", "verified": "unverified", "note": "入口倒角 1P + 絲攻不完全牙 2P" },
+    { "screwSize": "M8", "holeType": "blind", "imperfectPitches": 3.0, "clearanceMin": 2.0, "drillAllowance": 5.0, "source": "內規", "sourceRef": "保守估計，非查表值", "verified": "unverified", "note": "入口倒角 1P + 絲攻不完全牙 2P" }
+  ]
+}

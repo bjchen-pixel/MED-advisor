@@ -1,0 +1,9 @@
+node_modules
+dist
+coverage
+*.local
+
+# 內規牙深 overlay：廠內規範不進公開 repo
+src/data/thread-depth.internal.json
+!src/data/thread-depth.internal.example.json
+*.tsbuildinfo

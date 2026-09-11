@@ -1,0 +1,54 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 不取消進行中的部署，避免把已上線的版本打斷
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # 測試放在 build 之前：壞掉的資料檔在這裡就紅燈，根本到不了 Pages。
+      # tests/data/schema.test.ts 會驗所有隨附 JSON。
+      - name: 測試（含資料表 schema 驗證）
+        run: npm run test
+
+      - name: 型別檢查與建置
+        # base 由 GITHUB_REPOSITORY 自動決定，repo 改名不必改程式
+        run: npm run build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,36 @@
+{
+  "_說明": [
+    "這是【範例檔】，不是可用的資料。裡面的數值是刻意填成一望即知的假值。",
+    "",
+    "用法：複製本檔為 thread-depth.internal.json（同目錄），把 99 / 88 / 77 換成貴廠實際規範值。",
+    "該檔已被 .gitignore 排除，不會進公開 repo。",
+    "",
+    "重要：overlay 是【整表取代】，不做逐列合併。",
+    "  - 你的檔案必須涵蓋預設表的完整鍵集（M3/M4/M5/M6/M8 × blind），缺一格就會全頁阻斷。",
+    "  - 缺格不會回退到預設值——那會產生一張沒有任何人寫過的混合表，而 UI 只能顯示一個",
+    "    threadDepthSource，顯示哪個都在說謊。",
+    "  - 驗證失敗同樣全頁阻斷，不退回預設值。",
+    "",
+    "欄位意義：",
+    "  imperfectPitches  入口倒角 + 絲攻不完全牙，單位為 pitch 倍數。H_eff = H − imperfectPitches × pitch",
+    "  clearanceMin      餘隙下限（mm）。螺絲底端與有效牙深底之間至少要留這麼多",
+    "  drillAllowance    底孔比攻牙深多鑽多少（mm）。D = H + drillAllowance",
+    "",
+    "kind 必須是 \"internal\"——工具由這個欄位判斷牙深來源，不看檔名。",
+    "填好之後 UI 頁尾會顯示 internal（廠內規範），且警示帶不再出現「保守預設值」那條 warn。",
+    "",
+    "本 _說明 欄位在正式檔中請刪除（schema 為 strict，多餘欄位會被拒絕）。"
+  ],
+  "schemaVersion": 2,
+  "dataRevision": "2026-01-01.1",
+  "profile": "範例檔請改成貴廠規範名稱",
+  "kind": "internal",
+  "label": "範例檔，未經任何驗證，請勿直接改名使用",
+  "rows": [
+    { "screwSize": "M3", "holeType": "blind", "imperfectPitches": 99, "clearanceMin": 88, "drillAllowance": 77, "source": "內規", "sourceRef": "範例值，請替換", "verified": "unverified" },
+    { "screwSize": "M4", "holeType": "blind", "imperfectPitches": 99, "clearanceMin": 88, "drillAllowance": 77, "source": "內規", "sourceRef": "範例值，請替換", "verified": "unverified" },
+    { "screwSize": "M5", "holeType": "blind", "imperfectPitches": 99, "clearanceMin": 88, "drillAllowance": 77, "source": "內規", "sourceRef": "範例值，請替換", "verified": "unverified" },
+    { "screwSize": "M6", "holeType": "blind", "imperfectPitches": 99, "clearanceMin": 88, "drillAllowance": 77, "source": "內規", "sourceRef": "範例值，請替換", "verified": "unverified" },
+    { "screwSize": "M8", "holeType": "blind", "imperfectPitches": 99, "clearanceMin": 88, "drillAllowance": 77, "source": "內規", "sourceRef": "範例值，請替換", "verified": "unverified" }
+  ]
+}
