@@ -37,7 +37,12 @@ jobs:
         # base 由 GITHUB_REPOSITORY 自動決定，repo 改名不必改程式
         run: npm run build
 
+      # enablement: true 讓這一步在 Pages 尚未啟用時自己用 API 開啟，
+      # 不必有人進 Settings → Pages 點下拉選單。
+      # 沒有它的話，全新 repo（或別人 fork）第一次跑一定失敗在這裡。
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
