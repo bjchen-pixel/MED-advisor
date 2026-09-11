@@ -50,7 +50,8 @@ function parseCsvLine(line) {
 }
 
 function num(v, field, line, errors) {
-  if (v === '') return undefined;
+  // 欄位留空或表頭沒有這一欄，都視為「不檢查」——不能當成填了 NaN
+  if (v === '' || v === undefined) return undefined;
   const n = Number(v);
   if (!Number.isFinite(n)) {
     errors.push(`第 ${line} 列的「${field}」填了 ${JSON.stringify(v)}，不是數字`);
@@ -97,12 +98,9 @@ function main() {
 
     const expected = {};
     const put = (k, v) => { if (v !== undefined) expected[k] = v; };
-    put('實際使用長度', num(row['實際使用長度'], '實際使用長度', lineNo, errors));
-    put('沉頭孔徑', num(row['沉頭孔徑'], '沉頭孔徑', lineNo, errors));
-    put('沉頭孔深', num(row['沉頭孔深'], '沉頭孔深', lineNo, errors));
-    put('通孔徑', num(row['通孔徑'], '通孔徑', lineNo, errors));
-    put('底孔徑', num(row['底孔徑'], '底孔徑', lineNo, errors));
-    put('底孔深', num(row['底孔深'], '底孔深', lineNo, errors));
+    for (const f of ['實際使用長度', '沉孔徑', '沉孔深', '通孔徑', '底孔徑']) {
+      put(f, num(row[f], f, lineNo, errors));
+    }
 
     const inputs = {
       螺絲規格: row['螺絲規格'],
@@ -112,8 +110,8 @@ function main() {
       下件材質: row['下件材質'],
     };
     if (row['上件材質']) inputs['上件材質'] = row['上件材質'];
-    const H = num(row['攻牙深H'], '攻牙深H', lineNo, errors);
-    if (H !== undefined) inputs['攻牙深H'] = H;
+    const depth = num(row['有效牙深'], '有效牙深', lineNo, errors);
+    if (depth !== undefined) inputs['有效牙深'] = depth;
 
     cases.push({
       編號: row['編號'],

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "dataRevision": "2026-09-11.1",
+  "dataRevision": "2026-09-11.2",
   "note": "雙區段。materials[] 只依材質，pairs[] 依（母材 × 等級）。拆開的理由：remainingWall / hFloor 與等級無關，塞進 pairs 會讓每個值重複兩次，改一邊忘一邊就是靜默不一致。注意兩者索引來源不同——remainingWall 查【上件】材質（沉頭底為受力面，凹陷/拉穿發生在上件），hFloor 查【母材】（攻牙深下限）。",
   "materials": [
     {
@@ -39,7 +39,7 @@
       "kMin": 1.0,
       "kCap": 1.5,
       "flags": [],
-      "rationale": "鋼母材牙強度高於 A2-70 螺絲，破壞模式為螺絲斷裂而非母材崩牙，嵌入需求最低",
+      "rationale": "鋼母材的牙比 A2-70 螺絲強，會先斷螺絲而不是崩母材的牙，所以咬合需求最低",
       "source": "內規",
       "sourceRef": "派工單附錄（待甲方確認）",
       "verified": "unverified"
@@ -50,7 +50,7 @@
       "kMin": 1.5,
       "kCap": 2.0,
       "flags": [],
-      "rationale": "12.9 螺絲強度遠高於 S45C 未熱處理母材（1220 vs 690 MPa），需較深嵌入以避免母材先崩牙",
+      "rationale": "12.9 螺絲比未熱處理的 S45C 強很多（1220 對 690 MPa），要咬深一點才不會母材先崩牙",
       "source": "內規",
       "sourceRef": "派工單附錄（待甲方確認）",
       "verified": "unverified"
@@ -61,7 +61,7 @@
       "kMin": 1.5,
       "kCap": 2.0,
       "flags": [],
-      "rationale": "鋁母材牙強度低於 A2-70 螺絲（310 vs 700 MPa），需加深嵌入分攤牙載荷",
+      "rationale": "鋁母材的牙比 A2-70 螺絲弱（310 對 700 MPa），要咬深一點把受力分攤到更多牙上",
       "source": "內規",
       "sourceRef": "派工單附錄（待甲方確認）",
       "verified": "unverified"
@@ -72,7 +72,7 @@
       "kMin": 2.0,
       "kCap": 2.5,
       "flags": ["parent-thread-weaker"],
-      "rationale": "母材牙強度遠低於螺絲（310 vs 1220 MPa），破壞模式為母材崩牙而非螺絲斷裂",
+      "rationale": "母材的牙比螺絲弱很多（310 對 1220 MPa），會先崩母材的牙，不是斷螺絲",
       "source": "內規",
       "sourceRef": "派工單附錄（待甲方確認）",
       "verified": "unverified"
@@ -83,7 +83,7 @@
       "kMin": 1.25,
       "kCap": 1.75,
       "flags": ["galling-risk"],
-      "rationale": "沃斯田鐵不鏽鋼對不鏽鋼有咬死傾向；嵌入越長咬死機率越高，故 kCap 刻意壓低",
+      "rationale": "不鏽鋼鎖不鏽鋼容易咬死；咬合越長機率越高，所以上限刻意壓低",
       "source": "內規",
       "sourceRef": "派工單附錄（待甲方確認）",
       "verified": "unverified"
@@ -94,7 +94,7 @@
       "kMin": 1.5,
       "kCap": 2.0,
       "flags": ["galling-risk"],
-      "rationale": "12.9 螺絲強度高於 SUS304 母材（1220 vs 520 MPa），需較深嵌入；但不鏽鋼母材仍有咬死風險",
+      "rationale": "12.9 螺絲比 SUS304 母材強（1220 對 520 MPa），要咬深一點；但不鏽鋼母材仍有咬死風險",
       "source": "內規",
       "sourceRef": "派工單附錄（待甲方確認）",
       "verified": "unverified"

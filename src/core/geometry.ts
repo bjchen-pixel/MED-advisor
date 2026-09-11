@@ -98,24 +98,24 @@ export function counterboreDia(screw: ScrewRow, washer: WasherRow, clearance: nu
 // ────────────────────────────── 軸向 ──────────────────────────────
 
 export type ThreadDepthResolution = {
-  /** H */
-  tapDepth: number;
-  /** D。given 模式回 null。 */
-  drillDepth: number | null;
-  /** H_eff = H − imperfect */
-  hEff: number;
-  imperfect: number;
+  /** 有效牙深（滿牙深度）。圖面標註的就是這個值。 */
+  effectiveThreadDepth: number;
+  /** 母材慣例下限 */
   hFloor: number;
   mode: 'derived' | 'given';
-  /** given 模式下 H 低於母材慣例下限 */
+  /** given 模式下，現有孔的有效牙深低於母材慣例下限 */
   belowFloor: boolean;
 };
 
 /**
- * 攻牙深 H 的雙模式解析。兩條路徑都不循環：
+ * 有效牙深的雙模式解析。
  *
- *   模式 A（derived，新設計）  H 由 kCap、母材下限推出
- *   模式 B（given，現有件）    H 是已知條件，不改寫使用者量到的值
+ *   模式 A（derived，新設計）  由咬合倍數上限與母材下限推出建議值
+ *   模式 B（given，現有件）    圖面已標，直接採用，不改寫
+ *
+ * 這裡沒有「總攻牙深」與「底孔深」——圖面標註的就是有效牙深，加工端依其絲攻
+ * 型式自行決定鑽多深、攻多深。設計端規範結果，不規範方法：標總攻牙深等於把
+ * 絲攻型式的責任攬到設計端，而那是設計端看不到也控制不了的東西。
  */
 export function resolveThreadDepth(
   inputs: Inputs,
@@ -124,30 +124,21 @@ export function resolveThreadDepth(
   parentMat: MaterialRow,
   td: ThreadDepthRow,
 ): ThreadDepthResolution {
-  const imperfect = q(td.imperfectPitches * screw.pitch);
   const hFloor = q(parentMat.hFloorFactor * screw.d);
 
-  if (inputs.tapDepth !== undefined) {
-    // 模式 B：不改寫使用者給的 H，低於慣例下限只記旗標由 solve 發 warn。
-    const tapDepth = q(inputs.tapDepth);
+  if (inputs.effectiveThreadDepth !== undefined) {
+    const given = q(inputs.effectiveThreadDepth);
     return {
-      tapDepth,
-      drillDepth: null,
-      hEff: q(tapDepth - imperfect),
-      imperfect,
+      effectiveThreadDepth: given,
       hFloor,
       mode: 'given',
-      belowFloor: tapDepth < hFloor,
+      belowFloor: given < hFloor,
     };
   }
 
-  const wanted = pair.kCap * screw.d + imperfect + td.clearanceMin;
-  const tapDepth = q(Math.max(ceilTo(wanted, 1), hFloor));
+  const wanted = pair.kCap * screw.d + td.clearanceMin;
   return {
-    tapDepth,
-    drillDepth: q(tapDepth + td.drillAllowance),
-    hEff: q(tapDepth - imperfect),
-    imperfect,
+    effectiveThreadDepth: q(Math.max(ceilTo(wanted, 1), hFloor)),
     hFloor,
     mode: 'derived',
     belowFloor: false,
@@ -187,8 +178,7 @@ export function buildGeometry(
     counterboreDepth: q(c),
     throughDia: findHole(db, inputs.screwSize, 'through_medium').value,
     tapDrillDia: findHole(db, inputs.screwSize, 'tap_drill').value,
-    tapDepth: td.tapDepth,
-    drillDepth: td.drillDepth,
+    effectiveThreadDepth: td.effectiveThreadDepth,
     remainingWall: q(inputs.plateThickness - c),
   };
 }

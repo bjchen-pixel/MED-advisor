@@ -14,28 +14,28 @@ const ctx = (patch: Partial<CandidateContext> = {}): CandidateContext => ({
   eMax: 9,
   eTarget: 7.5,
   kCap: 1.5,
-  hEff: 11,
+  effectiveThreadDepth: 11,
   clearanceMin: 1.5,
   runout: 1,
   gallingRisk: false,
   ...patch,
 });
 
-describe('部分螺紋檢查：b ≥ E + runout（派工單 §5 驗收項）', () => {
-  it('無牙段進入攻牙孔 → infeasible', () => {
+describe('部分螺紋檢查：螺紋長 ≥ 咬合 ＋ 收尾（派工單 §5 驗收項）', () => {
+  it('無牙段伸進攻牙孔 → infeasible', () => {
     const reasons: string[] = [];
     // b=7 < E=7.5 + runout=1 → 8.5
     expect(classify(ctx(), 7.5, 3.5, 7, reasons)).toBe('infeasible');
-    expect(reasons[0]).toMatch(/無牙段會進入攻牙孔/);
+    expect(reasons[0]).toMatch(/無牙段會伸進攻牙孔/);
   });
 
-  it('收尾餘量確實生效：b 恰好等於 E 時仍不合格', () => {
+  it('收尾餘量確實生效：螺紋長恰好等於咬合時仍不合格', () => {
     const reasons: string[] = [];
     // b=7.5 === E=7.5，但需要 8.5
     expect(classify(ctx(), 7.5, 3.5, 7.5, reasons)).toBe('infeasible');
   });
 
-  it('b 恰好等於 E + runout 時通過（閉區間）', () => {
+  it('螺紋長恰好等於咬合＋收尾時通過（閉區間）', () => {
     const reasons: string[] = [];
     expect(classify(ctx(), 7.5, 3.5, 8.5, reasons)).toBe('recommended');
     expect(reasons[0]).toMatch(/✓/);
@@ -56,28 +56,28 @@ describe('部分螺紋檢查：b ≥ E + runout（派工單 §5 驗收項）', (
     const r = solve(inputs(), shortThread);
     const bad = r.candidates.filter((c) => c.status === 'infeasible');
     expect(bad.length).toBeGreaterThan(0);
-    expect(bad[0].reasons.some((x) => /無牙段會進入攻牙孔/.test(x))).toBe(true);
+    expect(bad[0].reasons.some((x) => /無牙段會伸進攻牙孔/.test(x))).toBe(true);
   });
 });
 
 describe('邊界一律含端點，且必留 reasons', () => {
-  it('E 剛好等於 E_min → recommended（不是 shallow）', () => {
+  it('咬合剛好等於下限 → recommended（不是咬合不足）', () => {
     const reasons: string[] = [];
     expect(classify(ctx(), 6, 5, 20, reasons)).toBe('recommended');
     expect(reasons.some((r) => /剛好等於下限/.test(r))).toBe(true);
   });
 
-  it('E 略低於 E_min → shallow', () => {
+  it('咬合略低於下限 → shallow', () => {
     expect(classify(ctx(), 5.99, 5, 20, [])).toBe('shallow');
   });
 
-  it('餘隙剛好等於下限 → 通過，但留字', () => {
+  it('剩餘牙深剛好等於下限 → 通過，但留字', () => {
     const reasons: string[] = [];
     expect(classify(ctx(), 7.5, 1.5, 20, reasons)).toBe('recommended');
-    expect(reasons.some((r) => /餘隙 1.5 已在下限/.test(r))).toBe(true);
+    expect(reasons.some((r) => /剩餘牙深 1.5 剛好在下限/.test(r))).toBe(true);
   });
 
-  it('餘隙略低於下限 → bottoming', () => {
+  it('剩餘牙深略低於下限 → bottoming', () => {
     expect(classify(ctx(), 7.5, 1.49, 20, [])).toBe('bottoming');
   });
 
@@ -94,24 +94,24 @@ describe('判定順序不可調換', () => {
     expect(classify(ctx(), 10, 0.5, 5, [])).toBe('infeasible');
   });
 
-  it('頂底優先於過淺：餘隙不足時即使 E 也不足仍判 bottoming', () => {
+  it('鎖到底優先於咬合不足：剩餘牙深不夠時即使咬合也不夠仍判 bottoming', () => {
     expect(classify(ctx(), 5, 1, 20, [])).toBe('bottoming');
   });
 });
 
-describe('E 超過 k_cap：無效益而非失效', () => {
-  it('餘隙足夠時 status 維持 recommended 但留下警告理由', () => {
+describe('咬合超過上限：沒效益，不是失效', () => {
+  it('剩餘牙深夠時 status 維持 recommended 但留下警告理由', () => {
     const reasons: string[] = [];
-    // kCap 1.5 × 6 = 9，E = 9.5 > 9，但 hEff 20 讓餘隙充足
-    expect(classify(ctx({ hEff: 20 }), 9.5, 10.5, 20, reasons)).toBe('recommended');
-    expect(reasons.some((r) => /超過 k_cap/.test(r))).toBe(true);
+    // 上限 1.5 × 6 = 9，咬合 9.5 > 9，但有效牙深 20 讓剩餘牙深充足
+    expect(classify(ctx({ effectiveThreadDepth: 20 }), 9.5, 10.5, 20, reasons)).toBe('recommended');
+    expect(reasons.some((r) => /超過上限/.test(r))).toBe(true);
     expect(reasons.some((r) => /螺紋護套或壓入螺母/.test(r))).toBe(true);
   });
 
   it('不鏽鋼母材改用咬死版本的文字', () => {
     const reasons: string[] = [];
-    classify(ctx({ hEff: 20, gallingRisk: true }), 9.5, 10.5, 20, reasons);
-    expect(reasons.some((r) => /咬死機率越高/.test(r))).toBe(true);
+    classify(ctx({ effectiveThreadDepth: 20, gallingRisk: true }), 9.5, 10.5, 20, reasons);
+    expect(reasons.some((r) => /咬死.*機率越高/.test(r))).toBe(true);
   });
 });
 
@@ -158,17 +158,17 @@ describe('排序是全序且決定性', () => {
   });
 });
 
-describe('c 夾限後必須重算 E 並重新判 status', () => {
+describe('沉孔深夾限後必須重算咬合並重新判 status', () => {
   const D = db();
 
-  it('夾限後的 c 與 E 自洽：E = L − (t − c) − w', () => {
+  it('夾限後的沉孔深與咬合自洽', () => {
     const r = solve(inputs(), D);
     for (const c of r.candidates) {
       expect(c.engagement).toBeCloseTo(c.length - (12 - c.counterboreDepth) - 1.6, 2);
     }
   });
 
-  it('c 一律落在 [c_min, c_max] 內', () => {
+  it('沉孔深一律落在可用範圍內', () => {
     const r = solve(inputs(), D);
     for (const c of r.candidates) {
       expect(c.counterboreDepth).toBeGreaterThanOrEqual(r.derivation.cMin - 1e-9);
@@ -182,10 +182,10 @@ describe('c 夾限後必須重算 E 並重新判 status', () => {
       (c) => Math.abs(c.counterboreDepth - c.counterboreDepthRequested) > 0.001,
     );
     expect(clamped.length).toBeGreaterThan(0);
-    expect(clamped[0].reasons.some((x) => /已夾限至/.test(x))).toBe(true);
+    expect(clamped[0].reasons.some((x) => /但可用範圍只有/.test(x))).toBe(true);
   });
 
-  it('夾限把 E 推出合格區間時，status 必須跟著降級', () => {
+  it('夾限把咬合推出合格範圍時，status 必須跟著降級', () => {
     const D2 = db();
     // 薄板讓 c_max 很小，短螺絲的 c 需求被夾限後 E 掉到 E_min 以下
     const r = solve(inputs({ plateThickness: 9.2, washer: 'none' }), D2);

@@ -99,10 +99,15 @@ export type MaterialPairRow = Provenance & {
 export type ThreadDepthRow = Provenance & {
   screwSize: ScrewSize;
   holeType: 'blind';
-  /** 不完全牙，單位為 pitch 倍數。 */
-  imperfectPitches: number;
+  /**
+   * 餘隙下限，mm。螺絲鎖到底後，底下必須還剩多少有效螺紋沒用到。
+   *
+   * 不完全牙扣除量與底孔深度不在此處，也不在本工具任何地方：本工具的圖面慣例是
+   * 標註有效牙深，加工端依其絲攻型式自行決定鑽多深、攻多深。設計端規範結果，
+   * 不規範方法——標總攻牙深等於把絲攻型式的責任攬到設計端，而那是看不到也控制
+   * 不了的東西。
+   */
   clearanceMin: number;
-  drillAllowance: number;
 };
 
 export type ThreadDepthTable = {
@@ -140,8 +145,8 @@ export type Inputs = {
   washer: WasherKey;
   /** 下件材質 */
   parentMaterial: MaterialKey;
-  /** 選填。現有件的既有攻牙深 H；留空即由工具推導。 */
-  tapDepth?: number;
+  /** 選填。現有件既有的有效牙深（圖面標註值）；留空即由工具推導。 */
+  effectiveThreadDepth?: number;
   /** 選填。上件材質，決定殘留肉厚下限；留空以 parentMaterial 代入並發 warn。 */
   plateMaterial?: MaterialKey;
 };
@@ -153,10 +158,12 @@ export type Geometry = {
   counterboreDepth: number;
   throughDia: number;
   tapDrillDia: number;
-  /** H */
-  tapDepth: number;
-  /** D。模式 B（現有件）回 null——底孔深未知，不推算。 */
-  drillDepth: number | null;
+  /**
+   * 有效牙深（滿牙深度），mm。這就是圖面要標註的值。
+   *
+   * 本工具不輸出總攻牙深與底孔深——那是加工端依絲攻型式決定的事。
+   */
+  effectiveThreadDepth: number;
   /** t − c。數值上等於夾持長度 G。 */
   remainingWall: number;
 };
@@ -208,9 +215,7 @@ export type Derivation = {
   eMin: number;
   eMax: number;
   eTarget: number;
-  imperfect: number;
-  imperfectPitches: number;
-  hEff: number;
+  effectiveThreadDepth: number;
   hFloor: number;
   clearanceMin: number;
   threadRunout: number;
@@ -229,7 +234,7 @@ export type Result = {
   dbVersion: string;
   dbVersionDetail: Record<string, string>;
   threadDepthSource: 'internal' | 'default';
-  tapDepthMode: 'derived' | 'given';
+  threadDepthMode: 'derived' | 'given';
   derivation: Derivation;
   /** 整組輸入是否可行。false 時 candidates 為空陣列。 */
   feasible: boolean;

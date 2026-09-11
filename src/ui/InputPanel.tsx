@@ -18,7 +18,7 @@ export type Draft = {
   grade: Grade;
   plateThickness: string;
   parentMaterial: MaterialKey;
-  tapDepth: string;
+  effectiveThreadDepth: string;
   plateMaterial: MaterialKey | '';
 };
 
@@ -28,7 +28,7 @@ export const INITIAL_DRAFT: Draft = {
   grade: 'A2-70',
   plateThickness: '12',
   parentMaterial: 'S45C',
-  tapDepth: '',
+  effectiveThreadDepth: '',
   plateMaterial: '',
 };
 
@@ -41,8 +41,9 @@ export function draftToInputs(d: Draft): Inputs | null {
   if (d.washer === '') return null;
   const t = Number(d.plateThickness);
   if (!Number.isFinite(t) || t <= 0) return null;
-  const tap = d.tapDepth.trim() === '' ? undefined : Number(d.tapDepth);
-  if (tap !== undefined && (!Number.isFinite(tap) || tap <= 0)) return null;
+  const depth =
+    d.effectiveThreadDepth.trim() === '' ? undefined : Number(d.effectiveThreadDepth);
+  if (depth !== undefined && (!Number.isFinite(depth) || depth <= 0)) return null;
   return {
     screwSize: d.screwSize,
     grade: d.grade,
@@ -50,7 +51,7 @@ export function draftToInputs(d: Draft): Inputs | null {
     plateThickness: t,
     washer: d.washer,
     parentMaterial: d.parentMaterial,
-    tapDepth: tap,
+    effectiveThreadDepth: depth,
     plateMaterial: d.plateMaterial === '' ? undefined : d.plateMaterial,
   };
 }
@@ -61,11 +62,11 @@ const MATERIALS: MaterialKey[] = ['S45C', '6061-T6', 'SUS304'];
 export function InputPanel({
   draft,
   onChange,
-  derivedTapDepth,
+  derivedThreadDepth,
 }: {
   draft: Draft;
   onChange: (d: Draft) => void;
-  derivedTapDepth: number | null;
+  derivedThreadDepth: number | null;
 }) {
   const set = <K extends keyof Draft>(k: K, v: Draft[K]) => onChange({ ...draft, [k]: v });
 
@@ -106,7 +107,7 @@ export function InputPanel({
             <option value="ISO7089">ISO 7089 平墊圈</option>
             <option value="ISO7092">ISO 7092 小外徑</option>
           </select>
-          <span className="hint">同時影響沉頭孔徑與嵌入量，必選</span>
+          <span className="hint">同時決定沉孔徑與咬合深度，必選</span>
         </div>
 
         <div className="field">
@@ -130,7 +131,7 @@ export function InputPanel({
         </div>
 
         <div className="field">
-          <label htmlFor="f-t">上件板厚 t（mm）</label>
+          <label htmlFor="f-t">上件板厚（mm）</label>
           <input
             id="f-t"
             type="number"
@@ -154,20 +155,24 @@ export function InputPanel({
           </select>
         </div>
 
-        <div className="optional-head">選填——現有件請填攻牙深；上件與下件不同材質請指定上件</div>
+        <div className="optional-head">
+          以下選填——孔已經存在就填有效牙深；上下件材質不同就指定上件
+        </div>
 
         <div className="field">
-          <label htmlFor="f-tap">攻牙深 H（mm）</label>
+          <label htmlFor="f-tap">有效牙深（mm）</label>
           <input
             id="f-tap"
             type="number"
             min="0"
             step="0.5"
-            value={draft.tapDepth}
-            placeholder={derivedTapDepth === null ? '留空＝由工具推導' : `留空＝推導為 ${derivedTapDepth}`}
-            onChange={(e) => set('tapDepth', e.target.value)}
+            value={draft.effectiveThreadDepth}
+            placeholder={
+              derivedThreadDepth === null ? '留空＝工具幫你算' : `留空＝算出來是 ${derivedThreadDepth}`
+            }
+            onChange={(e) => set('effectiveThreadDepth', e.target.value)}
           />
-          <span className="hint">填了即改用現有件模式，工具不改寫此值</span>
+          <span className="hint">孔已經存在就填圖面上的值，工具不會改寫</span>
         </div>
 
         <div className="field">
@@ -182,7 +187,7 @@ export function InputPanel({
               <option key={m} value={m}>{m}</option>
             ))}
           </select>
-          <span className="hint">決定殘留肉厚下限（受力面在上件）</span>
+          <span className="hint">決定底肉厚下限（受力面在上件）</span>
         </div>
       </div>
     </section>

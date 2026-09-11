@@ -15,7 +15,8 @@ export type CandidateContext = {
   eMax: number;
   eTarget: number;
   kCap: number;
-  hEff: number;
+  /** 有效牙深（滿牙深度） */
+  effectiveThreadDepth: number;
   clearanceMin: number;
   /** 螺紋收尾餘量，mm */
   runout: number;
@@ -24,11 +25,11 @@ export type CandidateContext = {
 
 /**
  * 判定順序不可調換：
- *   1  b < E + runout            → infeasible   無牙段進入攻牙孔
- *   2  clearance < clearanceMin  → bottoming    頂底
- *   3  E < E_min                 → shallow      嵌入不足
- *   4  E > kCap × d              → recommended ＋ 警告（無效益，非失效）
- *   5  否則                       → recommended
+ *   1  螺紋長 < 咬合 + 收尾      → infeasible   無牙段伸進攻牙孔
+ *   2  剩餘牙深 < 下限           → bottoming    會吃到不完全牙（假鎖緊）
+ *   3  咬合 < 下限               → shallow      咬合不足
+ *   4  咬合 > 上限               → recommended ＋ 警告（沒效益，不是失效）
+ *   5  否則                      → recommended
  */
 export function classify(
   ctx: CandidateContext,
@@ -41,32 +42,37 @@ export function classify(
 
   if (lt(b, needed)) {
     reasons.push(
-      `螺紋長 b=${fmt(b)} < 嵌入 E=${fmt(e)} + 收尾 ${fmt(ctx.runout)} = ${fmt(needed)}` +
-        `：無牙段會進入攻牙孔，嵌入量實際歸零`,
+      `螺紋長 ${fmt(b)} 不夠：要咬合 ${fmt(e)} 再加螺紋收尾 ${fmt(ctx.runout)}，` +
+        `至少需要 ${fmt(needed)}。螺絲的無牙段會伸進攻牙孔，咬合等於零，而圖面上看不出來`,
     );
     return 'infeasible';
   }
-  reasons.push(`螺紋長 b=${fmt(b)} ≥ 嵌入 E=${fmt(e)} + 收尾 ${fmt(ctx.runout)} = ${fmt(needed)} ✓`);
+  reasons.push(
+    `螺紋長 ${fmt(b)} 夠：咬合 ${fmt(e)} ＋ 螺紋收尾 ${fmt(ctx.runout)} ＝ ${fmt(needed)} ✓`,
+  );
 
   if (lt(clearance, ctx.clearanceMin)) {
     reasons.push(
-      `餘隙 ${fmt(clearance)} < 下限 ${fmt(ctx.clearanceMin)}：螺絲會頂到有效牙深底部（假鎖緊）`,
+      `剩餘牙深 ${fmt(clearance)} 低於下限 ${fmt(ctx.clearanceMin)}：螺絲會鎖進不完全牙。` +
+        `扭力被底部吃掉，扳手感覺很緊、扭力值也到了，但兩件之間沒有夾持力`,
     );
     return 'bottoming';
   }
   if (eq(clearance, ctx.clearanceMin)) {
     reasons.push(
-      `餘隙 ${fmt(clearance)} 已在下限，H 若少攻 0.1 即頂底`,
+      `剩餘牙深 ${fmt(clearance)} 剛好在下限，牙深少攻 0.1 就會鎖到底`,
     );
   }
 
   if (lt(e, ctx.eMin)) {
-    reasons.push(`嵌入 E=${fmt(e)} < 下限 ${fmt(ctx.eMin)}（${fmt(ctx.eMin / ctx.d)}d）：夾持力不足`);
+    reasons.push(
+      `咬合 ${fmt(e)} 低於下限 ${fmt(ctx.eMin)}（${fmt(ctx.eMin / ctx.d)}d）：夾持力不足`,
+    );
     return 'shallow';
   }
   if (eq(e, ctx.eMin)) {
     reasons.push(
-      `嵌入 E=${fmt(e)} 剛好等於下限 ${fmt(ctx.eMin / ctx.d)}d，無向下公差空間`,
+      `咬合 ${fmt(e)} 剛好等於下限 ${fmt(ctx.eMin / ctx.d)}d，沒有往下的公差空間`,
     );
   }
 
@@ -74,11 +80,11 @@ export function classify(
   if (gt(e, cap)) {
     reasons.push(
       ctx.gallingRisk
-        ? `嵌入 E=${fmt(e)} 超過 k_cap=${fmt(cap)}（${fmt(ctx.kCap)}d）：` +
-            `不鏽鋼母材嵌入越長咬死機率越高，不應以「深一點比較安全」加長`
-        : `嵌入 E=${fmt(e)} 超過 k_cap=${fmt(cap)}（${fmt(ctx.kCap)}d）：` +
-            `螺紋載荷集中在最靠接合面的前三到四牙，額外嵌入無強度效益。` +
-            `需更高強度應改螺紋護套或壓入螺母`,
+        ? `咬合 ${fmt(e)} 超過上限 ${fmt(cap)}（${fmt(ctx.kCap)}d）：` +
+            `不鏽鋼母材咬合越長，咬死（galling）機率越高，不要以「深一點比較安全」加長`
+        : `咬合 ${fmt(e)} 超過上限 ${fmt(cap)}（${fmt(ctx.kCap)}d）：` +
+            `螺紋受力集中在最靠接合面的前三到四牙，再深沒有強度效益。` +
+            `需要更高強度應改用螺紋護套或壓入螺母`,
     );
   }
 
@@ -98,19 +104,19 @@ export function buildCandidate(ctx: CandidateContext, row: LengthRow): Candidate
   const c = q(clamp(cReq, ctx.cMin, ctx.cMax));
   if (!eq(c, cReq)) {
     reasons.push(
-      `c 需求值 ${fmt(cReq)} 已夾限至 ${fmt(c)}` +
-        `（範圍 ${fmt(ctx.cMin)}–${fmt(ctx.cMax)}），E 因此偏離目標 ${fmt(ctx.eTarget)}`,
+      `沉孔深需要 ${fmt(cReq)} 才能剛好命中目標咬合 ${fmt(ctx.eTarget)}，` +
+        `但可用範圍只有 ${fmt(ctx.cMin)}–${fmt(ctx.cMax)}，已取 ${fmt(c)}，咬合因此偏離目標`,
     );
   }
 
   const grip = q(ctx.t - c);
   const e = q(row.l - grip - ctx.w);
-  const clearance = q(ctx.hEff - e);
+  const clearance = q(ctx.effectiveThreadDepth - e);
 
   const status = classify(ctx, e, clearance, row.b, reasons);
 
   if (eq(c, ctx.cMax)) {
-    reasons.push(`c 已達上界 ${fmt(ctx.cMax)}，殘留肉厚處於下限`);
+    reasons.push(`沉孔深已到上限 ${fmt(ctx.cMax)}，底肉厚正好在下限`);
   }
 
   return {

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "dataRevision": "2026-09-11.1",
-  "note": "od 進入沉頭孔徑計算，thickness 同時進入 c_min 與 E 兩條計算。key='none' 為工具內建的零值列，不是查表值——它存在的目的是讓 max(dkMax, od) 與 c_min 只有一個版本，不長出 if (washer === 'none') 分支。",
+  "note": "od 決定沉孔徑，thickness 同時影響沉孔最小深度與咬合深度。key='none' 為工具內建的零值列，不是查表值——它存在的目的是讓 max(dkMax, od) 與 c_min 只有一個版本，不長出 if (washer === 'none') 分支。",
   "rows": [
     { "key": "none", "screwSize": "M3", "od": 0, "id": 0, "thickness": 0, "source": "工具內建", "sourceRef": "無墊圈的零值列，非查表值", "verified": "verified" },
     { "key": "none", "screwSize": "M4", "od": 0, "id": 0, "thickness": 0, "source": "工具內建", "sourceRef": "無墊圈的零值列，非查表值", "verified": "verified" },

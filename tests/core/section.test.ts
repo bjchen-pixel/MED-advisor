@@ -9,7 +9,7 @@ function section(patch = {}, candidateIndex: number | null = 0) {
   const i = inputs(patch);
   const r = solve(i, D);
   const cand = candidateIndex === null ? null : (r.candidates[candidateIndex] ?? null);
-  return buildSection(r.geometry, cand, i, findScrew(D, i), findWasher(D, i), r.derivation.hEff);
+  return buildSection(r.geometry, cand, i, findScrew(D, i), findWasher(D, i));
 }
 
 describe('座標系：y 向下為正，原點在上件上表面', () => {
@@ -42,7 +42,7 @@ describe('座標系：y 向下為正，原點在上件上表面', () => {
     const i = inputs();
     const r = solve(i, D);
     const c = r.candidates[0];
-    const s = buildSection(r.geometry, c, i, findScrew(D, i), findWasher(D, i), r.derivation.hEff);
+    const s = buildSection(r.geometry, c, i, findScrew(D, i), findWasher(D, i));
     const dim = s.dims.find((d) => d.id === 'dim-E')!;
     expect(dim.value).toBe(c.engagement);
     expect(dim.to.y - dim.from.y).toBeCloseTo(c.engagement, 6);
@@ -55,15 +55,18 @@ describe('幾何異常自己會說話', () => {
     const i = inputs({ plateThickness: 12 });
     const r = solve(i, D);
     const c = { ...r.candidates[0], counterboreDepth: 2 }; // 人為壓淺
-    const s = buildSection(r.geometry, c, i, findScrew(D, i), findWasher(D, i), r.derivation.hEff);
+    const s = buildSection(r.geometry, c, i, findScrew(D, i), findWasher(D, i));
     expect(s.bounds.yMin).toBeLessThan(0);
     expect(s.notes.some((n) => /螺絲頭突出/.test(n))).toBe(true);
   });
 
-  it('模式 B 不繪底孔並註明', () => {
-    const s = section({ tapDepth: 12 });
-    expect(s.polylines.some((p) => p.id === 'drill')).toBe(false);
-    expect(s.notes.some((n) => /底孔深未知/.test(n))).toBe(true);
+  it('有效牙深以下用虛線示意，不假裝知道鑽多深', () => {
+    const s = section({ effectiveThreadDepth: 12 });
+    const below = s.polylines.find((p) => p.id === 'below-thread');
+    expect(below).toBeDefined();
+    expect(below!.role).toBe('drill');
+    // 圖上不得出現任何「底孔深」的尺寸標註——那是加工端決定的
+    expect(s.dims.some((d) => /底孔/.test(d.label))).toBe(false);
   });
 });
 

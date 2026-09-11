@@ -26,7 +26,7 @@ export function App({ db }: { db: Database }) {
       const screw = findScrew(db, inputs);
       const washer = findWasher(db, inputs);
       const best = result.candidates.find((c) => c.status === 'recommended') ?? result.candidates[0] ?? null;
-      const section = buildSection(result.geometry, best, inputs, screw, washer, result.derivation.hEff);
+      const section = buildSection(result.geometry, best, inputs, screw, washer);
       const annotation = annotate(result, inputs, screw.pitch);
       return { result, section, annotation };
     } catch (e) {
@@ -37,10 +37,11 @@ export function App({ db }: { db: Database }) {
 
   // 攻牙深欄位的 placeholder：顯示模式 A 會算出的值，但不自動填入——
   // 自動填會讓模式無聲翻轉成 given。
-  const derivedTapDepth = useMemo(() => {
+  const derivedThreadDepth = useMemo(() => {
     if (!inputs) return null;
     try {
-      return solve({ ...inputs, tapDepth: undefined }, db).geometry.tapDepth;
+      return solve({ ...inputs, effectiveThreadDepth: undefined }, db).geometry
+        .effectiveThreadDepth;
     } catch {
       return null;
     }
@@ -73,18 +74,18 @@ export function App({ db }: { db: Database }) {
       <header className="app-head">
         <h1>螺絲孔設計建議工具</h1>
         <div className="sub">
-          沉頭孔深度與螺絲長度的查表結果。判斷留給工程師——工具不自動選值。
+          沉孔深度與螺絲長度的查表結果。判斷留給工程師——工具不自動選值。
         </div>
       </header>
 
-      <InputPanel draft={draft} onChange={setDraft} derivedTapDepth={derivedTapDepth} />
+      <InputPanel draft={draft} onChange={setDraft} derivedThreadDepth={derivedThreadDepth} />
 
       {!inputs && (
         <section className="block">
           <p className="empty">
             {draft.washer === ''
-              ? '請先選擇「墊圈」——它同時決定沉頭孔徑與嵌入量，沒有它後面的數字都算不出來。'
-              : '請輸入有效的上件板厚。'}
+              ? '請先選「墊圈」——它同時決定沉孔徑與咬合深度，沒有它後面的數字都算不出來。'
+              : '請填上件板厚。'}
           </p>
         </section>
       )}
@@ -139,12 +140,12 @@ export function App({ db }: { db: Database }) {
               <span className="k">資料版本</span> {result.dbVersion}
             </span>
             <span>
-              <span className="k">牙深來源</span>{' '}
-              {result.threadDepthSource === 'default' ? 'default（保守預設值）' : 'internal（廠內規範）'}
+              <span className="k">剩餘牙深下限</span>{' '}
+              {result.threadDepthSource === 'default' ? '保守預設值' : '廠內規範'}
             </span>
             <span>
-              <span className="k">攻牙深</span>{' '}
-              {result.tapDepthMode === 'given' ? 'given（現有件）' : 'derived（工具推導）'}
+              <span className="k">有效牙深</span>{' '}
+              {result.threadDepthMode === 'given' ? '你填的' : '工具算的'}
             </span>
             <span>
               <span className="k">逐表</span>{' '}

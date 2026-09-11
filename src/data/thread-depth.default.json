@@ -1,15 +1,15 @@
 {
-  "schemaVersion": 2,
-  "dataRevision": "2026-09-11.1",
+  "schemaVersion": 3,
+  "dataRevision": "2026-09-11.2",
   "profile": "default-conservative",
   "kind": "default",
   "label": "保守預設值——非任何廠商或工廠的實際規範",
-  "note": "imperfectPitches 以 pitch 倍數計，因為不完全牙的物理成因（絲攻導程倒角、孔口倒角）本來就以牙數計；寫成 mm 會在規格間失去可比性。H_eff = H − imperfectPitches × pitch。內規值請走 thread-depth.internal.json（gitignored），該檔必須涵蓋本檔完整鍵集。",
+  "note": "本工具的圖面慣例：標註的是【有效牙深】（滿牙深度），不是總攻牙深。不完全牙要扣多少、底孔要鑽多深，是加工端依其絲攻型式決定的事，不在設計端規範範圍內——設計端規範結果，不規範方法。因此本檔只剩剩餘牙深下限一個值。",
   "rows": [
-    { "screwSize": "M3", "holeType": "blind", "imperfectPitches": 3.0, "clearanceMin": 1.5, "drillAllowance": 2.0, "source": "內規", "sourceRef": "保守估計，非查表值", "verified": "unverified", "note": "入口倒角 1P + 絲攻不完全牙 2P" },
-    { "screwSize": "M4", "holeType": "blind", "imperfectPitches": 3.0, "clearanceMin": 1.5, "drillAllowance": 2.5, "source": "內規", "sourceRef": "保守估計，非查表值", "verified": "unverified", "note": "入口倒角 1P + 絲攻不完全牙 2P" },
-    { "screwSize": "M5", "holeType": "blind", "imperfectPitches": 3.0, "clearanceMin": 1.5, "drillAllowance": 3.0, "source": "內規", "sourceRef": "保守估計，非查表值", "verified": "unverified", "note": "入口倒角 1P + 絲攻不完全牙 2P" },
-    { "screwSize": "M6", "holeType": "blind", "imperfectPitches": 3.0, "clearanceMin": 1.5, "drillAllowance": 4.0, "source": "內規", "sourceRef": "保守估計，非查表值", "verified": "unverified", "note": "入口倒角 1P + 絲攻不完全牙 2P" },
-    { "screwSize": "M8", "holeType": "blind", "imperfectPitches": 3.0, "clearanceMin": 2.0, "drillAllowance": 5.0, "source": "內規", "sourceRef": "保守估計，非查表值", "verified": "unverified", "note": "入口倒角 1P + 絲攻不完全牙 2P" }
+    { "screwSize": "M3", "holeType": "blind", "clearanceMin": 1.0, "source": "內規", "sourceRef": "保守估計，非查表值", "verified": "unverified", "note": "螺絲底端與有效牙深底之間至少要留的餘量" },
+    { "screwSize": "M4", "holeType": "blind", "clearanceMin": 1.0, "source": "內規", "sourceRef": "保守估計，非查表值", "verified": "unverified" },
+    { "screwSize": "M5", "holeType": "blind", "clearanceMin": 1.5, "source": "內規", "sourceRef": "保守估計，非查表值", "verified": "unverified" },
+    { "screwSize": "M6", "holeType": "blind", "clearanceMin": 1.5, "source": "內規", "sourceRef": "保守估計，非查表值", "verified": "unverified" },
+    { "screwSize": "M8", "holeType": "blind", "clearanceMin": 2.0, "source": "內規", "sourceRef": "保守估計，非查表值", "verified": "unverified" }
   ]
 }

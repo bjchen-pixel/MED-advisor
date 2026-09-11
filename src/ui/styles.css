@@ -86,7 +86,7 @@ section.block > h2 {
 .warn-item .lvl { font-weight: 700; font-size: 11px; letter-spacing: 0.06em; margin-right: 6px; }
 
 /* ── 區塊 3：剖面 ＋ 孔尺寸 ───────────────────────────── */
-.geo { display: grid; grid-template-columns: 300px 1fr; gap: 20px; align-items: start; }
+.geo { display: grid; grid-template-columns: 352px 1fr; gap: 18px; align-items: start; }
 .section-pane { border: 1px solid var(--line-soft); border-radius: 6px; background: #fcfdfe; padding: 8px; }
 .section-pane svg { display: block; width: 100%; height: auto; }
 .section-meta {
@@ -98,7 +98,8 @@ section.block > h2 {
 
 table.dims { width: 100%; border-collapse: collapse; font-size: 13px; }
 table.dims th, table.dims td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line-soft); }
-table.dims th { font-size: 11px; color: var(--muted); font-weight: 600; width: 40%; }
+table.dims th { font-size: 12px; color: var(--fg); font-weight: 600; width: 44%; }
+table.dims .th-hint { font-size: 10.5px; color: var(--muted); font-weight: 400; margin-top: 1px; }
 table.dims td { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 table.dims tr:last-child td, table.dims tr:last-child th { border-bottom: none; }
 .tag {
@@ -126,8 +127,9 @@ table.dims tr:last-child td, table.dims tr:last-child th { border-bottom: none; 
 .pill.bottoming { color: var(--err-fg); background: var(--err-bg); }
 .pill.infeasible { color: #4a4f56; background: #eceef1; }
 /* 判準數字：同列直接可見，不折疊、不藏進 tooltip */
-.crit { font-family: var(--mono); font-size: 11.5px; color: var(--muted); display: flex; gap: 10px; flex-wrap: wrap; }
-.crit b { color: var(--fg); font-weight: 600; }
+.crit { font-size: 11.5px; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap;
+        font-variant-numeric: tabular-nums; }
+.crit b { font-family: var(--mono); color: var(--fg); font-weight: 600; }
 .cand-row .exp { margin-left: auto; font-size: 11px; color: var(--accent); white-space: nowrap; }
 .cand-detail {
   border-top: 1px dashed var(--line); padding: 10px 12px;

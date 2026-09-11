@@ -13,7 +13,7 @@ describe('圖面標註字串', () => {
     const a = annotate(r, i, findScrew(D, i).pitch);
     expect(a.lines).toHaveLength(2);
     expect(a.lines[0]).toBe('Ø13 深9.1 / Ø6.6 通');
-    expect(a.lines[1]).toBe('M6×1 深14 / 底孔Ø5 深18');
+    expect(a.lines[1]).toBe('M6×1 有效牙深11');
   });
 
   it('複製字串為兩行，不夾帶警告或出處註解', () => {
@@ -23,12 +23,16 @@ describe('圖面標註字串', () => {
     expect(a.text).not.toMatch(/未查證|預設值|警示/);
   });
 
-  it('模式 B 無底孔深時只出攻牙段', () => {
-    const i = inputs({ tapDepth: 12 });
-    const r = solve(i, D);
-    const a = annotate(r, i, 1);
-    expect(a.lines[1]).toBe('M6×1 深12');
-    expect(a.lines[1]).not.toMatch(/底孔/);
+  it('標註寫明「有效牙深」，不依賴讀圖慣例', () => {
+    const i = inputs({ effectiveThreadDepth: 12 });
+    const a = annotate(solve(i, D), i, 1);
+    expect(a.lines[1]).toBe('M6×1 有效牙深12');
+  });
+
+  it('標註不含底孔徑與底孔深——鑽多深是加工端決定的', () => {
+    const i = inputs();
+    const a = annotate(solve(i, D), i, 1);
+    expect(a.text).not.toMatch(/底孔/);
   });
 
   it('沉頭孔行隨墊圈改變', () => {
@@ -39,7 +43,7 @@ describe('圖面標註字串', () => {
   it('tapLine 帶入正確螺距', () => {
     const i = inputs({ screwSize: 'M8' });
     const g = solve(i, D).geometry;
-    expect(tapLine(g, 'M8', 1.25)).toMatch(/^M8×1\.25 深/);
+    expect(tapLine(g, 'M8', 1.25)).toMatch(/^M8×1\.25 有效牙深/);
   });
 });
 

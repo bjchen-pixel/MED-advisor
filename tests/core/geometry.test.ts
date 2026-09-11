@@ -35,7 +35,7 @@ describe('沉頭孔徑正確反映墊圈（派工單 §5 驗收項）', () => {
   });
 });
 
-describe('殘留肉厚下限 = max(factor × d, floor)', () => {
+describe('底肉厚下限 = max(factor × d, floor)', () => {
   const D = db();
 
   it.each([
@@ -51,30 +51,31 @@ describe('殘留肉厚下限 = max(factor × d, floor)', () => {
   });
 });
 
-describe('攻牙深雙模式', () => {
+describe('有效牙深雙模式', () => {
   const D = db();
 
-  it('模式 A：H 由 kCap 推導，drillDepth 有值', () => {
+  it('模式 A：工具算出有效牙深，不輸出總攻牙深與底孔深', () => {
     const r = solve(inputs(), D);
-    expect(r.tapDepthMode).toBe('derived');
-    // kCap 1.5 × 6 = 9，+ imperfect 3 + clearanceMin 1.5 = 13.5 → ceil 14
-    expect(r.geometry.tapDepth).toBe(14);
-    expect(r.geometry.drillDepth).toBe(18); // 14 + drillAllowance 4
-    expect(r.derivation.hEff).toBe(11); // 14 − 3
+    expect(r.threadDepthMode).toBe('derived');
+    // kCap 1.5 × 6 = 9，加要留的剩餘牙深 1.5 = 10.5 → 進位 11
+    expect(r.geometry.effectiveThreadDepth).toBe(11);
+    expect(r.derivation.effectiveThreadDepth).toBe(11);
+    // 總攻牙深與底孔深是加工端的事，Geometry 不該有這兩個欄位
+    expect('drillDepth' in r.geometry).toBe(false);
+    expect('tapDepth' in r.geometry).toBe(false);
   });
 
-  it('模式 B：H 為輸入，drillDepth 回 null（底孔深未知，不推算）', () => {
-    const r = solve(inputs({ tapDepth: 12 }), D);
-    expect(r.tapDepthMode).toBe('given');
-    expect(r.geometry.tapDepth).toBe(12);
-    expect(r.geometry.drillDepth).toBeNull();
-    expect(r.derivation.hEff).toBe(9);
+  it('模式 B：圖面已標，直接採用，不做任何扣除', () => {
+    const r = solve(inputs({ effectiveThreadDepth: 12 }), D);
+    expect(r.threadDepthMode).toBe('given');
+    expect(r.geometry.effectiveThreadDepth).toBe(12);
+    expect(r.derivation.effectiveThreadDepth).toBe(12);
   });
 
-  it('模式 B 不改寫使用者給的 H，即使低於母材慣例下限，只發 warn', () => {
+  it('模式 B 不改寫你填的值，即使低於母材慣例下限，只發 warn', () => {
     // S45C hFloorFactor 1.0 × 6 = 6
-    const r = solve(inputs({ tapDepth: 5 }), D);
-    expect(r.geometry.tapDepth).toBe(5); // 未被改寫
+    const r = solve(inputs({ effectiveThreadDepth: 5 }), D);
+    expect(r.geometry.effectiveThreadDepth).toBe(5); // 未被改寫
     expect(r.warnings.some((w) => w.level === 'warn' && w.message.includes('慣例下限'))).toBe(true);
   });
 
@@ -86,16 +87,9 @@ describe('攻牙深雙模式', () => {
       findMaterial(D, '6061-T6'),
       findThreadDepth(D, inputs()),
     );
-    // kCap 2.0 × 6 = 12 + 3 + 1.5 = 16.5 → ceil 17；hFloor = 12 → 取 17
-    expect(res.tapDepth).toBe(17);
+    // kCap 2.0 × 6 = 12 + 1.5 = 13.5 → 進位 14；hFloor = 12 → 取 14
+    expect(res.effectiveThreadDepth).toBe(14);
     expect(res.mode).toBe('derived');
-  });
-
-  it('H_eff ≤ 0 回 error 且不產生候選', () => {
-    const r = solve(inputs({ tapDepth: 2 }), D); // imperfect = 3
-    expect(r.feasible).toBe(false);
-    expect(r.candidates).toEqual([]);
-    expect(r.warnings.some((w) => w.level === 'error' && w.message.includes('H_eff'))).toBe(true);
   });
 });
 
@@ -113,7 +107,7 @@ describe('查表失敗大聲失敗，不靜默套預設值', () => {
   });
 });
 
-describe('remainingWall 與 G 恆等', () => {
+describe('底肉厚與夾持長度恆等', () => {
   const D = db();
 
   it('每個候選的 remainingWall 都等於 t − c', () => {

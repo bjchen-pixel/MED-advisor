@@ -45,7 +45,7 @@ function toInputs(c: Case): Inputs {
     washer: i['墊圈'] as WasherKey,
     parentMaterial: i['下件材質'] as MaterialKey,
     plateMaterial: i['上件材質'] as MaterialKey | undefined,
-    tapDepth: i['攻牙深H'] as number | undefined,
+    effectiveThreadDepth: i['有效牙深'] as number | undefined,
   };
 }
 
@@ -77,11 +77,10 @@ describe('實機孔位回歸', () => {
       // ── 填了才檢查的欄位 ──
       const e = c.期望;
       const optional: [string, number | undefined, unknown][] = [
-        ['沉頭孔徑', e['沉頭孔徑'], r.geometry.counterboreDia],
+        ['沉孔徑', e['沉孔徑'], r.geometry.counterboreDia],
         ['通孔徑', e['通孔徑'], r.geometry.throughDia],
         ['底孔徑', e['底孔徑'], r.geometry.tapDrillDia],
-        ['底孔深', e['底孔深'], r.geometry.drillDepth],
-        ['沉頭孔深', e['沉頭孔深'], r.geometry.counterboreDepth],
+        ['沉孔深', e['沉孔深'], r.geometry.counterboreDepth],
       ];
       for (const [name, exp, act] of optional) {
         if (exp === undefined) stats.skipped += 1;

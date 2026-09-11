@@ -12,7 +12,9 @@ import { useEffect, useRef, useState } from 'react';
 import type { SectionModel, SectionPolyline } from '../core/section';
 import { axialOverflow, pickScale, scaleLabel } from '../core/section';
 
-const VIEW_W = 280;
+const VIEW_W = 350;
+/** 左右各預留給標註文字的固定像素，不隨比例變動 */
+const TEXT_GUTTER = 66;
 const VIEW_H_MAX = 320;
 const VIEW_H_MIN = 150;
 
@@ -33,7 +35,7 @@ function path(points: { x: number; y: number }[], closed: boolean): string {
 
 export function SectionPreview({ model }: { model: SectionModel }) {
   // bounds 已是鏡射後的完整寬度，所以這裡給的也是完整視窗寬度
-  const px = pickScale(model.bounds, VIEW_W - 12);
+  const px = pickScale(model.bounds, VIEW_W - TEXT_GUTTER * 2);
 
   // 畫布高度跟著內容走（比例不變，只是不留大片空白）。
   // 注意：高度變化來自幾何本身，不是重新縮放——板厚變厚，圖就真的變高。
@@ -56,6 +58,9 @@ export function SectionPreview({ model }: { model: SectionModel }) {
 
   const cx = VIEW_W / 2;
   const top = 8;
+  /** 模型座標（mm）→ 螢幕座標（px） */
+  const sx = (x: number) => cx + x * px;
+  const sy = (y: number) => top + (y - model.bounds.yMin) * px;
   const clipH = (VIEW_H - 16) / px; // 可見的 mm 數
 
   return (
@@ -69,8 +74,8 @@ export function SectionPreview({ model }: { model: SectionModel }) {
         <g clipPath="url(#view-clip)">
           <g transform={`translate(${cx} ${top - model.bounds.yMin * px}) scale(${px})`}>
             {/* 右半 ＋ 鏡射出的左半 */}
-            {[1, -1].map((sx) => (
-              <g key={sx} transform={`scale(${sx} 1)`}>
+            {[1, -1].map((side) => (
+              <g key={side} transform={`scale(${side} 1)`}>
                 {model.polylines.map((p) => {
                   const s = STROKE[p.role];
                   return (
@@ -98,51 +103,39 @@ export function SectionPreview({ model }: { model: SectionModel }) {
               vectorEffect="non-scaling-stroke"
             />
             {/* 尺寸標註 */}
-            {model.dims
-              .filter((d) => d.kind === 'axial')
-              .map((d) => {
-                const x = d.from.x;
-                const right = x >= 0;
-                const color = d.emphasis === 'critical' ? '#8a2018' : '#1b4f8a';
-                const tick = 1.6;
-                return (
-                  <g key={d.id} stroke={color} fill={color}>
-                    <line
-                      x1={x}
-                      y1={d.from.y}
-                      x2={x}
-                      y2={d.to.y}
-                      strokeWidth={1 / px}
-                      vectorEffect="non-scaling-stroke"
-                    />
-                    {/* 端點短橫線，讓量到哪裡一目了然 */}
-                    {[d.from.y, d.to.y].map((y, n) => (
-                      <line
-                        key={n}
-                        x1={x - tick}
-                        y1={y}
-                        x2={x + tick}
-                        y2={y}
-                        strokeWidth={1 / px}
-                        vectorEffect="non-scaling-stroke"
-                      />
-                    ))}
-                    <text
-                      x={x + (right ? tick + 0.6 : -(tick + 0.6))}
-                      y={(d.from.y + d.to.y) / 2}
-                      fontSize={9 / px}
-                      textAnchor={right ? 'start' : 'end'}
-                      dominantBaseline="middle"
-                      stroke="none"
-                      fontFamily="Consolas, monospace"
-                    >
-                      {d.label} {d.value}
-                    </text>
-                  </g>
-                );
-              })}
           </g>
         </g>
+
+        {/* 尺寸標註畫在螢幕座標，不跟著圖縮放——縮小時文字才不會糊掉或被裁掉 */}
+        {model.dims
+          .filter((d) => d.kind === 'axial')
+          .map((d) => {
+            const x = sx(d.from.x);
+            const y1 = sy(d.from.y);
+            const y2 = sy(d.to.y);
+            const right = d.from.x >= 0;
+            const color = d.emphasis === 'critical' ? '#8a2018' : '#1b4f8a';
+            const tick = 3.5;
+            return (
+              <g key={d.id} stroke={color} fill={color}>
+                <line x1={x} y1={y1} x2={x} y2={y2} strokeWidth={1} />
+                {/* 端點短橫線，讓量到哪裡一目了然 */}
+                {[y1, y2].map((y, n) => (
+                  <line key={n} x1={x - tick} y1={y} x2={x + tick} y2={y} strokeWidth={1} />
+                ))}
+                <text
+                  x={x + (right ? tick + 2 : -(tick + 2))}
+                  y={(y1 + y2) / 2}
+                  fontSize={9.5}
+                  textAnchor={right ? 'start' : 'end'}
+                  dominantBaseline="middle"
+                  stroke="none"
+                >
+                  {d.label} {d.value}
+                </text>
+              </g>
+            );
+          })}
         {/* 軸向溢出：裁切母材下段並畫折斷線，不降比例 */}
         {overflow.overflows && (
           <>

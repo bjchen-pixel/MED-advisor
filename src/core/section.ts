@@ -137,7 +137,6 @@ export function buildSection(
   inputs: Inputs,
   screw: ScrewRow,
   washer: WasherRow,
-  hEff: number,
 ): SectionModel {
   const t = inputs.plateThickness;
   const c = candidate ? candidate.counterboreDepth : geometry.counterboreDepth;
@@ -151,8 +150,8 @@ export function buildSection(
   const rWasher = washer.od / 2;
   const rHead = screw.dkMax / 2;
 
-  const H = geometry.tapDepth;
-  const D = geometry.drillDepth;
+  /** 有效牙深（滿牙深度）。底下還有不完全牙與鑽孔，但那是加工端的事，本圖不畫。 */
+  const H = geometry.effectiveThreadDepth;
 
   const polylines: SectionPolyline[] = [];
   const dims: SectionDim[] = [];
@@ -162,8 +161,12 @@ export function buildSection(
   // 尺寸線放在本體兩側，並把它們算進 outerR，避免標註被裁掉
   const dimLeft = -(bodyR + 1.5);
   const dimRight = bodyR + 1.5;
-  const outerR = bodyR + 7;
-  const parentBottom = t + (D ?? H + 2);
+  // bounds 只涵蓋本體與尺寸線；標註文字所需的留白由 view 以固定像素預留，
+  // 不算進 bounds——否則文字長短會反過來影響比例。
+  const outerR = bodyR + 2;
+  // 母材畫到有效牙深再多一點——底下實際還有不完全牙與鑽孔餘量，
+  // 但深度由加工端決定，工具不知道也不該假裝知道。
+  const parentBottom = q(t + H + Math.max(3, screw.d * 0.6));
 
   // 上件：從 y=0 到 y=t，右半自孔壁到外緣
   polylines.push(rect('plate-cb', 'plate-upper', rCb, 0, bodyR, c, { angle: 45, pitch: 2 }));
@@ -184,29 +187,16 @@ export function buildSection(
     ],
     closed: false,
   });
+  // 有效牙深以下：加工端還會鑽得更深（不完全牙＋鑽尖），深度未知，用虛線示意
   polylines.push({
-    id: 'thread-eff',
-    role: 'thread',
+    id: 'below-thread',
+    role: 'drill',
     points: [
-      { x: rDrill, y: t + hEff },
-      { x: rScrew, y: t + hEff },
+      { x: rDrill, y: t + H },
+      { x: rDrill, y: parentBottom },
     ],
     closed: false,
   });
-
-  if (D !== null) {
-    polylines.push({
-      id: 'drill',
-      role: 'drill',
-      points: [
-        { x: rDrill, y: t + H },
-        { x: rDrill, y: t + D },
-      ],
-      closed: false,
-    });
-  } else {
-    notes.push('底孔深未知（現有件模式），圖上不繪');
-  }
 
   let yMin = 0;
 
@@ -227,7 +217,7 @@ export function buildSection(
 
     dims.push({
       id: 'dim-E',
-      label: 'E',
+      label: '咬合',
       value: candidate.engagement,
       kind: 'axial',
       from: { x: dimRight, y: t },
@@ -237,11 +227,11 @@ export function buildSection(
     });
     dims.push({
       id: 'dim-clearance',
-      label: '餘隙',
+      label: '剩餘牙深',
       value: candidate.clearance,
       kind: 'axial',
       from: { x: dimRight, y: screwBottom },
-      to: { x: dimRight, y: t + hEff },
+      to: { x: dimRight, y: t + H },
       offset: 0,
       emphasis: candidate.status === 'bottoming' ? 'critical' : 'normal',
     });
@@ -249,7 +239,7 @@ export function buildSection(
 
   dims.push({
     id: 'dim-c',
-    label: 'c',
+    label: '沉孔深',
     value: round2(c),
     kind: 'axial',
     from: { x: dimLeft, y: 0 },
@@ -259,7 +249,7 @@ export function buildSection(
   });
   dims.push({
     id: 'dim-G',
-    label: 'G',
+    label: '底肉厚',
     value: round2(t - c),
     kind: 'axial',
     from: { x: dimLeft, y: c },
@@ -269,7 +259,7 @@ export function buildSection(
   });
   dims.push({
     id: 'dim-cbdia',
-    label: 'Ø沉頭',
+    label: 'Ø沉孔',
     value: geometry.counterboreDia,
     kind: 'diameter',
     from: { x: 0, y: 0 },

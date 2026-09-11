@@ -58,9 +58,9 @@ export function solve(inputs: Inputs, db: Database): Result {
     warnings.push({
       level: 'warn',
       message:
-        `上件材質未指定，殘留肉厚判準以下件材質 ${inputs.parentMaterial} 代入。` +
-        `沉頭底面是受力面，凹陷與拉穿發生在上件——上件若為鋁合金請明確指定，` +
-        `否則肉厚下限會被放寬到鋼件標準。`,
+        `上件材質沒指定，底肉厚的下限先以下件材質 ${inputs.parentMaterial} 代入。` +
+        `受力面在沉孔底，會凹陷或被拉穿的是上件——上件若是鋁合金請明確指定，` +
+        `否則肉厚下限會被放寬到鋼件的標準。`,
     });
   }
 
@@ -73,9 +73,9 @@ export function solve(inputs: Inputs, db: Database): Result {
     warnings.push({
       level: 'warn',
       message:
-        `現有孔牙深 H=${fmt(tdr.tapDepth)} 低於 ${inputs.parentMaterial} 的慣例下限 ` +
-        `${fmt(tdr.hFloor)}（${fmt(parentMat.hFloorFactor)}d）。工具不會改寫你量到的值，` +
-        `但這個孔的牙強度餘裕偏低。`,
+        `這個孔的有效牙深 ${fmt(tdr.effectiveThreadDepth)} 低於 ${inputs.parentMaterial} 的` +
+        `慣例下限 ${fmt(tdr.hFloor)}（${fmt(parentMat.hFloorFactor)}d）。` +
+        `工具不會改寫你填的值，但這個孔的牙強度餘裕偏低。`,
     });
   }
 
@@ -86,23 +86,23 @@ export function solve(inputs: Inputs, db: Database): Result {
 
   const eMin = q(pair.kMin * d);
   const eMaxByCap = q(pair.kCap * d);
-  const eMaxByDepth = q(tdr.hEff - td.clearanceMin);
+  const eMaxByDepth = q(tdr.effectiveThreadDepth - td.clearanceMin);
   const eMax = Math.min(eMaxByCap, eMaxByDepth);
   const eTarget = q((eMin + eMax) / 2);
   const runout = q(screw.threadRunout.value * screw.pitch);
 
   const unverifiedFields = collectUnverified([
-    { field: `螺絲 ${screw.size} 頭徑/頭高`, p: screw },
-    { field: '螺紋收尾餘量 runout', p: screw.threadRunout },
-    { field: `墊圈 ${washer.key}`, p: washer },
-    { field: '埋入餘量 δ', p: deltaRow },
-    { field: '沉頭孔徑讓隙', p: clearanceRow },
+    { field: `${screw.size} 頭徑與頭高`, p: screw },
+    { field: '螺紋收尾餘量', p: screw.threadRunout },
+    { field: `墊圈 ${washer.key} 外徑與厚度`, p: washer },
+    { field: '沉孔埋入餘量', p: deltaRow },
+    { field: '沉孔徑讓隙', p: clearanceRow },
     { field: '通孔徑', p: throughRow },
     { field: '底孔徑', p: tapDrillRow },
-    { field: `嵌入係數 ${pair.parentMaterial}×${pair.grade}`, p: pair },
-    { field: `殘留肉厚下限 ${plateMat.key}`, p: plateMat },
-    { field: `攻牙深下限 ${parentMat.key}`, p: parentMat },
-    { field: `牙深規則 ${td.screwSize}`, p: td },
+    { field: `咬合倍數（${pair.parentMaterial} 配 ${pair.grade}）`, p: pair },
+    { field: `底肉厚下限（${plateMat.key}）`, p: plateMat },
+    { field: `有效牙深下限（${parentMat.key}）`, p: parentMat },
+    { field: `剩餘牙深下限（${td.screwSize}）`, p: td },
   ]);
 
   const ctx: CandidateContext = {
@@ -115,7 +115,7 @@ export function solve(inputs: Inputs, db: Database): Result {
     eMax,
     eTarget,
     kCap: pair.kCap,
-    hEff: tdr.hEff,
+    effectiveThreadDepth: tdr.effectiveThreadDepth,
     clearanceMin: td.clearanceMin,
     runout,
     gallingRisk: pair.flags.includes('galling-risk'),
@@ -144,9 +144,7 @@ export function solve(inputs: Inputs, db: Database): Result {
     eMin: round2(eMin),
     eMax: round2(eMax),
     eTarget: round2(eTarget),
-    imperfect: round2(tdr.imperfect),
-    imperfectPitches: td.imperfectPitches,
-    hEff: round2(tdr.hEff),
+    effectiveThreadDepth: round2(tdr.effectiveThreadDepth),
     hFloor: round2(tdr.hFloor),
     clearanceMin: td.clearanceMin,
     threadRunout: round2(runout),
@@ -162,9 +160,8 @@ export function solve(inputs: Inputs, db: Database): Result {
     warnings.push({
       level: 'warn',
       message:
-        `牙深規則使用保守預設值，非貴廠內規。H_eff 由 H 扣 ` +
-        `${fmt(td.imperfectPitches)}×pitch = ${fmt(tdr.imperfect)} 推得，` +
-        `實際值請依廠內絲攻與底孔規範確認。`,
+        `剩餘牙深的下限用的是保守預設值 ${fmt(td.clearanceMin)} mm，不是貴廠內規。` +
+        `這個值決定螺絲底下要留多少牙不用到，請依廠內規範確認。`,
     });
   }
 
@@ -172,9 +169,9 @@ export function solve(inputs: Inputs, db: Database): Result {
     warnings.push({
       level: 'warn',
       message:
-        `有 ${unverifiedFields.length} 項參與計算的數值尚未查證：` +
+        `有 ${unverifiedFields.length} 項算進來的數值還沒查證：` +
         unverifiedFields.map((f) => f.field).join('、') +
-        '。查證完成前請勿直接採用本工具的輸出。',
+        '。查證完成前請不要直接把本工具的輸出畫進圖面。',
     });
   }
 
@@ -191,46 +188,42 @@ export function solve(inputs: Inputs, db: Database): Result {
       dbVersion: db.dbVersion,
       dbVersionDetail: db.dbVersionDetail,
       threadDepthSource: db.threadDepth.kind,
-      tapDepthMode: tdr.mode,
+      threadDepthMode: tdr.mode,
       derivation,
       feasible: false,
     };
   };
 
   // 牙深本身不合法
-  if (!gt(tdr.hEff, 0)) {
-    return fail(
-      `有效牙深 H_eff=${fmt(tdr.hEff)} ≤ 0：給定的攻牙深 H=${fmt(tdr.tapDepth)} ` +
-        `比不完全牙 ${fmt(tdr.imperfect)} 還淺，這個孔沒有可用螺紋。`,
-    );
+  if (!gt(tdr.effectiveThreadDepth, 0)) {
+    return fail(`有效牙深 ${fmt(tdr.effectiveThreadDepth)} 不是正值，這個孔沒有可用螺紋。`);
   }
 
   // c_min > c_max：沉頭孔埋不進去
   if (gt(cMin, cMax)) {
     const short = round2(cMin - cMax);
     return fail(
-      `沉頭孔埋不進去：所需深度 c_min=${fmt(cMin)}` +
-        `（頭高 ${fmt(screw.kMax)} + 墊圈 ${fmt(washer.thickness)} + δ ${fmt(deltaRow.value)}）` +
-        `超過可用深度 c_max=${fmt(cMax)}` +
-        `（板厚 ${fmt(inputs.plateThickness)} − 殘留肉厚下限 ${fmt(rwMin)}），缺 ${fmt(short)} mm。` +
-        `建議改用低頭型（FHCS/BHCS，v1 未支援）、去掉墊圈，或把上件加厚到 ` +
+      `螺絲頭埋不進去，缺 ${fmt(short)} mm。` +
+        `要埋平至少需要沉孔深 ${fmt(cMin)}` +
+        `（頭高 ${fmt(screw.kMax)} ＋ 墊圈 ${fmt(washer.thickness)} ＋ 埋入餘量 ${fmt(deltaRow.value)}），` +
+        `但板厚 ${fmt(inputs.plateThickness)} 扣掉底肉厚下限 ${fmt(rwMin)} 之後只剩 ${fmt(cMax)}。` +
+        `可改用低頭型螺絲（v1 尚未支援）、拿掉墊圈，或把上件加厚到 ` +
         `${fmt(q(cMin + rwMin))} mm 以上。`,
     );
   }
 
   // E_min > E_max：牙深不足
   if (gt(eMin, eMax)) {
-    const neededHEff = q(eMin + td.clearanceMin);
-    const neededH = q(neededHEff + tdr.imperfect);
+    const neededDepth = q(eMin + td.clearanceMin);
     const cause =
       eMaxByDepth < eMaxByCap
-        ? `有效牙深不足（H_eff=${fmt(tdr.hEff)}，扣掉餘隙下限 ${fmt(td.clearanceMin)} ` +
-          `後只剩 ${fmt(eMaxByDepth)} 可用）`
-        : `嵌入上限 k_cap=${fmt(pair.kCap)}d 低於下限 k_min=${fmt(pair.kMin)}d（資料表矛盾）`;
+        ? `這個孔的有效牙深只有 ${fmt(tdr.effectiveThreadDepth)}，` +
+          `扣掉要留的剩餘牙深 ${fmt(td.clearanceMin)} 之後只夠咬 ${fmt(eMaxByDepth)}`
+        : `咬合倍數上限 ${fmt(pair.kCap)}d 低於下限 ${fmt(pair.kMin)}d（資料表本身矛盾）`;
     return fail(
-      `此孔無可行嵌入量：需要 E ≥ ${fmt(eMin)}（${fmt(pair.kMin)}d），但${cause}。` +
-        `${inputs.screwSize} 配 ${inputs.grade} 於 ${inputs.parentMaterial} 至少需 ` +
-        `H ≥ ${fmt(neededH)} mm。`,
+      `這個孔咬不住：${inputs.screwSize} 配 ${inputs.grade} 鎖 ${inputs.parentMaterial}，` +
+        `至少要咬合 ${fmt(eMin)}（${fmt(pair.kMin)}d），但${cause}。` +
+        `有效牙深至少要 ${fmt(neededDepth)} mm。`,
     );
   }
 
@@ -241,9 +234,9 @@ export function solve(inputs: Inputs, db: Database): Result {
     warnings.push({
       level: 'warn',
       message:
-        `可行長度區間為 ${fmt(lengthRange.lMin)}–${fmt(lengthRange.lMax)} mm，` +
-        `${screw.size} 的標準長度清單在此範圍內沒有任何長度。` +
-        `可調整板厚或沉頭孔深以移動區間。`,
+        `算出來可用的螺絲長度落在 ${fmt(lengthRange.lMin)}–${fmt(lengthRange.lMax)} mm，` +
+        `但 ${screw.size} 的標準長度裡沒有一支落在這個範圍。` +
+        `可以改板厚或沉孔深，把範圍挪開。`,
     });
   }
 
@@ -260,8 +253,9 @@ export function solve(inputs: Inputs, db: Database): Result {
     warnings.push({
       level: 'warn',
       message:
-        `長度 ${tight.map((c) => c.length).join('、')} mm 的殘留肉厚落在下限 ` +
-        `${fmt(rwMin)} ±0.5 內，已無公差空間。沉頭底面是受力面，過薄會在預壓力下凹陷或拉穿。`,
+        `${tight.map((c) => c.length).join('、')} mm 這幾支的底肉厚落在下限 ` +
+        `${fmt(rwMin)} ±0.5 之內，已經沒有公差空間。受力面在沉孔底，` +
+        `太薄會在鎖緊的預壓力下凹陷，或是被整個拉穿。`,
     });
   }
 
@@ -282,7 +276,7 @@ export function solve(inputs: Inputs, db: Database): Result {
     dbVersion: db.dbVersion,
     dbVersionDetail: db.dbVersionDetail,
     threadDepthSource: db.threadDepth.kind,
-    tapDepthMode: tdr.mode,
+    threadDepthMode: tdr.mode,
     derivation,
     feasible: candidates.some((c) => c.status !== 'infeasible'),
   };

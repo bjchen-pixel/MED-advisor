@@ -177,9 +177,7 @@ export const threadDepthRow = z
   .object({
     screwSize,
     holeType: z.literal('blind'),
-    imperfectPitches: z.number().nonnegative(),
     clearanceMin: z.number().nonnegative(),
-    drillAllowance: z.number().nonnegative(),
     ...provenance,
   })
   .strict();
