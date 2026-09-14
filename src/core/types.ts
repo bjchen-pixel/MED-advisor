@@ -8,7 +8,7 @@
 export type Grade = 'A2-70' | '12.9';
 export type MaterialKey = 'S45C' | '6061-T6' | 'SUS304';
 export type WasherKey = 'none' | 'ISO7089' | 'ISO7092';
-export type ScrewSize = 'M3' | 'M4' | 'M5' | 'M6' | 'M8';
+export type ScrewSize = 'M3' | 'M4' | 'M5' | 'M6' | 'M8' | 'M10' | 'M12';
 export type HeadType = 'SHCS';
 
 export type Source =

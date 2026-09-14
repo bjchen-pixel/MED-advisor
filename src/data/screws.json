@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "dataRevision": "2026-09-11.1",
+  "dataRevision": "2026-09-14.1",
   "note": "b 的語意：目錄標註螺紋長度，含不完全牙收尾。收尾餘量由 threadRunout 另外扣除。填表前務必確認來源目錄採用同一定義，否則會重複扣一次。本檔數值全部來自派工單附錄之記憶參考值，尚未查證，一律標 unverified。",
   "rows": [
     {
@@ -21,17 +21,94 @@
         "note": "單位為 pitch 倍數"
       },
       "lengths": [
-        { "l": 5, "b": 5, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 6, "b": 6, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 8, "b": 8, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 10, "b": 10, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 12, "b": 12, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 16, "b": 12, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 20, "b": 12, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 25, "b": 12, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 30, "b": 12, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 35, "b": 12, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 40, "b": 12, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" }
+        {
+          "l": 5,
+          "b": 5,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 6,
+          "b": 6,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 8,
+          "b": 8,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 10,
+          "b": 10,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 12,
+          "b": 12,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 16,
+          "b": 12,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 20,
+          "b": 12,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 25,
+          "b": 12,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 30,
+          "b": 12,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 35,
+          "b": 12,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 40,
+          "b": 12,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        }
       ]
     },
     {
@@ -52,19 +129,110 @@
         "note": "單位為 pitch 倍數"
       },
       "lengths": [
-        { "l": 6, "b": 6, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 8, "b": 8, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 10, "b": 10, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 12, "b": 12, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 14, "b": 14, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 16, "b": 14, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 20, "b": 14, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 25, "b": 14, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 30, "b": 14, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 35, "b": 14, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 40, "b": 14, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 45, "b": 14, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 50, "b": 14, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" }
+        {
+          "l": 6,
+          "b": 6,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 8,
+          "b": 8,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 10,
+          "b": 10,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 12,
+          "b": 12,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 14,
+          "b": 14,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 16,
+          "b": 14,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 20,
+          "b": 14,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 25,
+          "b": 14,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 30,
+          "b": 14,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 35,
+          "b": 14,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 40,
+          "b": 14,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 45,
+          "b": 14,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 50,
+          "b": 14,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        }
       ]
     },
     {
@@ -85,19 +253,110 @@
         "note": "單位為 pitch 倍數"
       },
       "lengths": [
-        { "l": 8, "b": 8, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 10, "b": 10, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 12, "b": 12, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 16, "b": 16, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 20, "b": 16, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 25, "b": 16, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 30, "b": 16, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 35, "b": 16, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 40, "b": 16, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 45, "b": 16, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 50, "b": 16, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 55, "b": 16, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 60, "b": 16, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" }
+        {
+          "l": 8,
+          "b": 8,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 10,
+          "b": 10,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 12,
+          "b": 12,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 16,
+          "b": 16,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 20,
+          "b": 16,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 25,
+          "b": 16,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 30,
+          "b": 16,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 35,
+          "b": 16,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 40,
+          "b": 16,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 45,
+          "b": 16,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 50,
+          "b": 16,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 55,
+          "b": 16,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 60,
+          "b": 16,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        }
       ]
     },
     {
@@ -118,23 +377,142 @@
         "note": "單位為 pitch 倍數"
       },
       "lengths": [
-        { "l": 8, "b": 8, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 10, "b": 10, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 12, "b": 12, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 16, "b": 16, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 18, "b": 18, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 20, "b": 18, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 25, "b": 18, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 30, "b": 18, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 35, "b": 18, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 40, "b": 18, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 45, "b": 18, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 50, "b": 18, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 55, "b": 18, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 60, "b": 18, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 65, "b": 18, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 70, "b": 18, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 80, "b": 18, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" }
+        {
+          "l": 8,
+          "b": 8,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 10,
+          "b": 10,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 12,
+          "b": 12,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 16,
+          "b": 16,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 18,
+          "b": 18,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 20,
+          "b": 18,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 25,
+          "b": 18,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 30,
+          "b": 18,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 35,
+          "b": 18,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 40,
+          "b": 18,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 45,
+          "b": 18,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 50,
+          "b": 18,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 55,
+          "b": 18,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 60,
+          "b": 18,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 65,
+          "b": 18,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 70,
+          "b": 18,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 80,
+          "b": 18,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        }
       ]
     },
     {
@@ -155,24 +533,486 @@
         "note": "單位為 pitch 倍數"
       },
       "lengths": [
-        { "l": 10, "b": 10, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 12, "b": 12, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 16, "b": 16, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 20, "b": 20, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 22, "b": 22, "fullThread": true, "source": "ISO 4762", "sourceRef": "b = l（全牙），未逐值查證", "verified": "unverified" },
-        { "l": 25, "b": 22, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 30, "b": 22, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 35, "b": 22, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 40, "b": 22, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 45, "b": 22, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 50, "b": 22, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 55, "b": 22, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 60, "b": 22, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 65, "b": 22, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 70, "b": 22, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 80, "b": 22, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 90, "b": 22, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" },
-        { "l": 100, "b": 22, "fullThread": false, "source": "ISO 4762", "sourceRef": "b = 2d+6 慣例值，未逐值查證", "verified": "unverified" }
+        {
+          "l": 10,
+          "b": 10,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 12,
+          "b": 12,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 16,
+          "b": 16,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 20,
+          "b": 20,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 22,
+          "b": 22,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 25,
+          "b": 22,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 30,
+          "b": 22,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 35,
+          "b": 22,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 40,
+          "b": 22,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 45,
+          "b": 22,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 50,
+          "b": 22,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 55,
+          "b": 22,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 60,
+          "b": 22,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 65,
+          "b": 22,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 70,
+          "b": 22,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 80,
+          "b": 22,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 90,
+          "b": 22,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 100,
+          "b": 22,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        }
+      ]
+    },
+    {
+      "size": "M10",
+      "headType": "SHCS",
+      "d": 10,
+      "pitch": 1.5,
+      "dkMax": 16.0,
+      "kMax": 10.0,
+      "source": "ISO 4762",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified",
+      "threadRunout": {
+        "value": 1.0,
+        "source": "內規",
+        "sourceRef": "老師裁決 2026-09-11，預設 1×P",
+        "verified": "unverified",
+        "note": "單位為 pitch 倍數"
+      },
+      "lengths": [
+        {
+          "l": 12,
+          "b": 12,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 16,
+          "b": 16,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 20,
+          "b": 20,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 25,
+          "b": 25,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 30,
+          "b": 26,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 35,
+          "b": 26,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 40,
+          "b": 26,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 45,
+          "b": 26,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 50,
+          "b": 26,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 55,
+          "b": 26,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 60,
+          "b": 26,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 65,
+          "b": 26,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 70,
+          "b": 26,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 80,
+          "b": 26,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 90,
+          "b": 26,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 100,
+          "b": 26,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 110,
+          "b": 26,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 120,
+          "b": 26,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        }
+      ]
+    },
+    {
+      "size": "M12",
+      "headType": "SHCS",
+      "d": 12,
+      "pitch": 1.75,
+      "dkMax": 18.0,
+      "kMax": 12.0,
+      "source": "ISO 4762",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified",
+      "threadRunout": {
+        "value": 1.0,
+        "source": "內規",
+        "sourceRef": "老師裁決 2026-09-11，預設 1×P",
+        "verified": "unverified",
+        "note": "單位為 pitch 倍數"
+      },
+      "lengths": [
+        {
+          "l": 16,
+          "b": 16,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 20,
+          "b": 20,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 25,
+          "b": 25,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 30,
+          "b": 30,
+          "fullThread": true,
+          "source": "ISO 4762",
+          "sourceRef": "b = l（全牙），未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 35,
+          "b": 30,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 40,
+          "b": 30,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 45,
+          "b": 30,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 50,
+          "b": 30,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 55,
+          "b": 30,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 60,
+          "b": 30,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 65,
+          "b": 30,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 70,
+          "b": 30,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 80,
+          "b": 30,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 90,
+          "b": 30,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 100,
+          "b": 30,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 110,
+          "b": 30,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 120,
+          "b": 30,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 130,
+          "b": 30,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        },
+        {
+          "l": 140,
+          "b": 30,
+          "fullThread": false,
+          "source": "ISO 4762",
+          "sourceRef": "b = 2d+6 慣例值，未逐值查證",
+          "verified": "unverified"
+        }
       ]
     }
   ]

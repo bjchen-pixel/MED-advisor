@@ -1,24 +1,217 @@
 {
   "schemaVersion": 2,
-  "dataRevision": "2026-09-11.1",
+  "dataRevision": "2026-09-14.1",
   "note": "od 決定沉孔徑，thickness 同時影響沉孔最小深度與咬合深度。key='none' 為工具內建的零值列，不是查表值——它存在的目的是讓 max(dkMax, od) 與 c_min 只有一個版本，不長出 if (washer === 'none') 分支。",
   "rows": [
-    { "key": "none", "screwSize": "M3", "od": 0, "id": 0, "thickness": 0, "source": "工具內建", "sourceRef": "無墊圈的零值列，非查表值", "verified": "verified" },
-    { "key": "none", "screwSize": "M4", "od": 0, "id": 0, "thickness": 0, "source": "工具內建", "sourceRef": "無墊圈的零值列，非查表值", "verified": "verified" },
-    { "key": "none", "screwSize": "M5", "od": 0, "id": 0, "thickness": 0, "source": "工具內建", "sourceRef": "無墊圈的零值列，非查表值", "verified": "verified" },
-    { "key": "none", "screwSize": "M6", "od": 0, "id": 0, "thickness": 0, "source": "工具內建", "sourceRef": "無墊圈的零值列，非查表值", "verified": "verified" },
-    { "key": "none", "screwSize": "M8", "od": 0, "id": 0, "thickness": 0, "source": "工具內建", "sourceRef": "無墊圈的零值列，非查表值", "verified": "verified" },
-
-    { "key": "ISO7089", "screwSize": "M3", "od": 7, "id": 3.2, "thickness": 0.5, "source": "ISO 7089", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified" },
-    { "key": "ISO7089", "screwSize": "M4", "od": 9, "id": 4.3, "thickness": 0.8, "source": "ISO 7089", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified" },
-    { "key": "ISO7089", "screwSize": "M5", "od": 10, "id": 5.3, "thickness": 1.0, "source": "ISO 7089", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified" },
-    { "key": "ISO7089", "screwSize": "M6", "od": 12, "id": 6.4, "thickness": 1.6, "source": "ISO 7089", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified" },
-    { "key": "ISO7089", "screwSize": "M8", "od": 16, "id": 8.4, "thickness": 1.6, "source": "ISO 7089", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified" },
-
-    { "key": "ISO7092", "screwSize": "M3", "od": 6, "id": 3.2, "thickness": 0.5, "source": "ISO 7092", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified" },
-    { "key": "ISO7092", "screwSize": "M4", "od": 8, "id": 4.3, "thickness": 0.5, "source": "ISO 7092", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified" },
-    { "key": "ISO7092", "screwSize": "M5", "od": 9, "id": 5.3, "thickness": 1.0, "source": "ISO 7092", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified" },
-    { "key": "ISO7092", "screwSize": "M6", "od": 11, "id": 6.4, "thickness": 1.6, "source": "ISO 7092", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified" },
-    { "key": "ISO7092", "screwSize": "M8", "od": 15, "id": 8.4, "thickness": 1.6, "source": "ISO 7092", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified" }
+    {
+      "key": "none",
+      "screwSize": "M3",
+      "od": 0,
+      "id": 0,
+      "thickness": 0,
+      "source": "工具內建",
+      "sourceRef": "無墊圈的零值列，非查表值",
+      "verified": "verified"
+    },
+    {
+      "key": "none",
+      "screwSize": "M4",
+      "od": 0,
+      "id": 0,
+      "thickness": 0,
+      "source": "工具內建",
+      "sourceRef": "無墊圈的零值列，非查表值",
+      "verified": "verified"
+    },
+    {
+      "key": "none",
+      "screwSize": "M5",
+      "od": 0,
+      "id": 0,
+      "thickness": 0,
+      "source": "工具內建",
+      "sourceRef": "無墊圈的零值列，非查表值",
+      "verified": "verified"
+    },
+    {
+      "key": "none",
+      "screwSize": "M6",
+      "od": 0,
+      "id": 0,
+      "thickness": 0,
+      "source": "工具內建",
+      "sourceRef": "無墊圈的零值列，非查表值",
+      "verified": "verified"
+    },
+    {
+      "key": "none",
+      "screwSize": "M8",
+      "od": 0,
+      "id": 0,
+      "thickness": 0,
+      "source": "工具內建",
+      "sourceRef": "無墊圈的零值列，非查表值",
+      "verified": "verified"
+    },
+    {
+      "key": "ISO7089",
+      "screwSize": "M3",
+      "od": 7,
+      "id": 3.2,
+      "thickness": 0.5,
+      "source": "ISO 7089",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "key": "ISO7089",
+      "screwSize": "M4",
+      "od": 9,
+      "id": 4.3,
+      "thickness": 0.8,
+      "source": "ISO 7089",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "key": "ISO7089",
+      "screwSize": "M5",
+      "od": 10,
+      "id": 5.3,
+      "thickness": 1.0,
+      "source": "ISO 7089",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "key": "ISO7089",
+      "screwSize": "M6",
+      "od": 12,
+      "id": 6.4,
+      "thickness": 1.6,
+      "source": "ISO 7089",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "key": "ISO7089",
+      "screwSize": "M8",
+      "od": 16,
+      "id": 8.4,
+      "thickness": 1.6,
+      "source": "ISO 7089",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "key": "ISO7092",
+      "screwSize": "M3",
+      "od": 6,
+      "id": 3.2,
+      "thickness": 0.5,
+      "source": "ISO 7092",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "key": "ISO7092",
+      "screwSize": "M4",
+      "od": 8,
+      "id": 4.3,
+      "thickness": 0.5,
+      "source": "ISO 7092",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "key": "ISO7092",
+      "screwSize": "M5",
+      "od": 9,
+      "id": 5.3,
+      "thickness": 1.0,
+      "source": "ISO 7092",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "key": "ISO7092",
+      "screwSize": "M6",
+      "od": 11,
+      "id": 6.4,
+      "thickness": 1.6,
+      "source": "ISO 7092",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "key": "ISO7092",
+      "screwSize": "M8",
+      "od": 15,
+      "id": 8.4,
+      "thickness": 1.6,
+      "source": "ISO 7092",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "key": "none",
+      "screwSize": "M10",
+      "od": 0,
+      "id": 0,
+      "thickness": 0,
+      "source": "工具內建",
+      "sourceRef": "無墊圈的零值列，非查表值",
+      "verified": "verified"
+    },
+    {
+      "key": "none",
+      "screwSize": "M12",
+      "od": 0,
+      "id": 0,
+      "thickness": 0,
+      "source": "工具內建",
+      "sourceRef": "無墊圈的零值列，非查表值",
+      "verified": "verified"
+    },
+    {
+      "key": "ISO7089",
+      "screwSize": "M10",
+      "od": 20,
+      "id": 10.5,
+      "thickness": 2.0,
+      "source": "ISO 7089",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "key": "ISO7089",
+      "screwSize": "M12",
+      "od": 24,
+      "id": 13.0,
+      "thickness": 2.5,
+      "source": "ISO 7089",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "key": "ISO7092",
+      "screwSize": "M10",
+      "od": 18,
+      "id": 10.5,
+      "thickness": 2.0,
+      "source": "ISO 7092",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "key": "ISO7092",
+      "screwSize": "M12",
+      "od": 20,
+      "id": 13.0,
+      "thickness": 2.5,
+      "source": "ISO 7092",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    }
   ]
 }

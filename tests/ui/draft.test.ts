@@ -14,7 +14,6 @@ import { INITIAL_DRAFT, draftToInputs, type Draft } from '../../src/ui/InputPane
 
 const draft = (patch: Partial<Draft> = {}): Draft => ({
   ...INITIAL_DRAFT,
-  washer: 'ISO7089',
   ...patch,
 });
 
@@ -85,13 +84,21 @@ describe('每一欄的問題都指名自己', () => {
 });
 
 describe('初始草稿', () => {
-  it('墊圈無預設值，必須強制選擇（派工單 §5 驗收項）', () => {
-    expect(INITIAL_DRAFT.washer).toBe('');
-    const r = draftToInputs(INITIAL_DRAFT);
-    expect(r.ok).toBe(false);
+  it('墊圈預設為「無」（甲方 2026-09-14 裁決，取代派工單 §3.6 的強制選擇）', () => {
+    expect(INITIAL_DRAFT.washer).toBe('none');
   });
 
-  it('選了墊圈之後，其餘欄位的預設值足以直接算出結果', () => {
-    expect(draftToInputs(draft()).ok).toBe(true);
+  it('一打開就算得出結果，不需要任何輸入', () => {
+    const r = draftToInputs(INITIAL_DRAFT);
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.inputs.washer).toBe('none');
+  });
+
+  it('墊圈欄位仍保留空值的驗證——型別允許，UI 不再產生', () => {
+    const r = draftToInputs(draft({ washer: '' }));
+    expect(r.ok).toBe(false);
+    if (r.ok) return;
+    expect(r.issues[0].field).toBe('墊圈');
   });
 });

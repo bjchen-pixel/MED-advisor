@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedFrom": "regression.csv",
-  "generatedAt": "2026-09-11",
+  "generatedAt": "2026-09-14",
   "說明": "本檔由 npm run fixtures:import 產生，請勿手動編輯——改 regression.csv 再重跑。",
   "cases": [
     {

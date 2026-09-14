@@ -17,7 +17,7 @@ const CSV = join(here, '..', 'tests', 'fixtures', 'regression.csv');
 const JSON_OUT = join(here, '..', 'tests', 'fixtures', 'regression.json');
 
 const ENUMS = {
-  螺絲規格: ['M3', 'M4', 'M5', 'M6', 'M8'],
+  螺絲規格: ['M3', 'M4', 'M5', 'M6', 'M8', 'M10', 'M12'],
   等級: ['A2-70', '12.9'],
   墊圈: ['無', 'ISO7089', 'ISO7092'],
   下件材質: ['S45C', '6061-T6', 'SUS304'],

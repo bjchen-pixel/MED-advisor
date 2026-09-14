@@ -25,7 +25,7 @@ describe('隨附資料檔全部通過 schema', () => {
   it('五張表都有鍵齊全的列', () => {
     const r = loadDatabase();
     if (!r.ok) throw new Error('載入失敗');
-    const sizes = ['M3', 'M4', 'M5', 'M6', 'M8'];
+    const sizes = ['M3', 'M4', 'M5', 'M6', 'M8', 'M10', 'M12'];
     for (const s of sizes) {
       expect(r.db.screws.some((x) => x.size === s), `screws ${s}`).toBe(true);
       expect(r.db.threadDepth.rows.some((x) => x.screwSize === s), `threadDepth ${s}`).toBe(true);

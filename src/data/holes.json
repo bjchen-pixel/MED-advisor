@@ -1,42 +1,420 @@
 {
   "schemaVersion": 2,
-  "dataRevision": "2026-09-11.2",
+  "dataRevision": "2026-09-14.1",
   "note": "純長格式，一列一數值一來源。feature 為判別鍵。tap_drill 不是標準規定值，隨牙高百分比與母材而異，來源絕不可標成 ISO。remaining_wall_min 已於 rev B 移入 materials.json（依材質而非依規格）。",
   "rows": [
-    { "screwSize": "M3", "feature": "through_fine", "value": 3.2, "unit": "mm", "source": "ISO 273", "sourceRef": "細級，未查證", "verified": "unverified" },
-    { "screwSize": "M4", "feature": "through_fine", "value": 4.3, "unit": "mm", "source": "ISO 273", "sourceRef": "細級，未查證", "verified": "unverified" },
-    { "screwSize": "M5", "feature": "through_fine", "value": 5.3, "unit": "mm", "source": "ISO 273", "sourceRef": "細級，未查證", "verified": "unverified" },
-    { "screwSize": "M6", "feature": "through_fine", "value": 6.4, "unit": "mm", "source": "ISO 273", "sourceRef": "細級，未查證", "verified": "unverified" },
-    { "screwSize": "M8", "feature": "through_fine", "value": 8.4, "unit": "mm", "source": "ISO 273", "sourceRef": "細級，未查證", "verified": "unverified" },
-
-    { "screwSize": "M3", "feature": "through_medium", "value": 3.4, "unit": "mm", "source": "ISO 273", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified" },
-    { "screwSize": "M4", "feature": "through_medium", "value": 4.5, "unit": "mm", "source": "ISO 273", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified" },
-    { "screwSize": "M5", "feature": "through_medium", "value": 5.5, "unit": "mm", "source": "ISO 273", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified" },
-    { "screwSize": "M6", "feature": "through_medium", "value": 6.6, "unit": "mm", "source": "ISO 273", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified" },
-    { "screwSize": "M8", "feature": "through_medium", "value": 9.0, "unit": "mm", "source": "ISO 273", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified" },
-
-    { "screwSize": "M3", "feature": "through_coarse", "value": 3.6, "unit": "mm", "source": "ISO 273", "sourceRef": "粗級，未查證", "verified": "unverified" },
-    { "screwSize": "M4", "feature": "through_coarse", "value": 4.8, "unit": "mm", "source": "ISO 273", "sourceRef": "粗級，未查證", "verified": "unverified" },
-    { "screwSize": "M5", "feature": "through_coarse", "value": 5.8, "unit": "mm", "source": "ISO 273", "sourceRef": "粗級，未查證", "verified": "unverified" },
-    { "screwSize": "M6", "feature": "through_coarse", "value": 7.0, "unit": "mm", "source": "ISO 273", "sourceRef": "粗級，未查證", "verified": "unverified" },
-    { "screwSize": "M8", "feature": "through_coarse", "value": 10.0, "unit": "mm", "source": "ISO 273", "sourceRef": "粗級，未查證", "verified": "unverified" },
-
-    { "screwSize": "M3", "feature": "tap_drill", "value": 2.5, "unit": "mm", "threadEngagementPercent": 75, "appliesTo": "all", "source": "供應商目錄", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified", "note": "非標準規定值。鋁材常用較大底孔，若內規分材質，本列拆為 appliesTo 各材質" },
-    { "screwSize": "M4", "feature": "tap_drill", "value": 3.3, "unit": "mm", "threadEngagementPercent": 75, "appliesTo": "all", "source": "供應商目錄", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified", "note": "非標準規定值" },
-    { "screwSize": "M5", "feature": "tap_drill", "value": 4.2, "unit": "mm", "threadEngagementPercent": 75, "appliesTo": "all", "source": "供應商目錄", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified", "note": "非標準規定值" },
-    { "screwSize": "M6", "feature": "tap_drill", "value": 5.0, "unit": "mm", "threadEngagementPercent": 75, "appliesTo": "all", "source": "供應商目錄", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified", "note": "非標準規定值" },
-    { "screwSize": "M8", "feature": "tap_drill", "value": 6.8, "unit": "mm", "threadEngagementPercent": 75, "appliesTo": "all", "source": "供應商目錄", "sourceRef": "派工單附錄（記憶值，未查證）", "verified": "unverified", "note": "非標準規定值" },
-
-    { "screwSize": "M3", "feature": "counterbore_clearance", "value": 1.0, "unit": "mm", "source": "內規", "sourceRef": "由派工單 §5 驗收條件反推（M6 無墊圈 → Ø11）", "verified": "unverified", "note": "沉孔徑讓隙" },
-    { "screwSize": "M4", "feature": "counterbore_clearance", "value": 1.0, "unit": "mm", "source": "內規", "sourceRef": "由派工單 §5 驗收條件反推（M6 無墊圈 → Ø11）", "verified": "unverified", "note": "沉孔徑讓隙" },
-    { "screwSize": "M5", "feature": "counterbore_clearance", "value": 1.0, "unit": "mm", "source": "內規", "sourceRef": "由派工單 §5 驗收條件反推（M6 無墊圈 → Ø11）", "verified": "unverified", "note": "沉孔徑讓隙" },
-    { "screwSize": "M6", "feature": "counterbore_clearance", "value": 1.0, "unit": "mm", "source": "內規", "sourceRef": "由派工單 §5 驗收條件反推（M6 無墊圈 → Ø11）", "verified": "unverified", "note": "沉孔徑讓隙" },
-    { "screwSize": "M8", "feature": "counterbore_clearance", "value": 1.0, "unit": "mm", "source": "內規", "sourceRef": "由派工單 §5 驗收條件反推（M6 無墊圈 → Ø11）", "verified": "unverified", "note": "沉孔徑讓隙" },
-
-    { "screwSize": "M3", "feature": "counterbore_delta", "value": 0.5, "unit": "mm", "source": "內規", "sourceRef": "派工單 §3.3（M3–M6 取 0.5）", "verified": "unverified", "note": "沉孔埋入餘量：留給加工公差與表面處理，不是留給螺絲。ISO 4762 的頭高是單邊負公差，螺絲只會比公稱矮" },
-    { "screwSize": "M4", "feature": "counterbore_delta", "value": 0.5, "unit": "mm", "source": "內規", "sourceRef": "派工單 §3.3（M3–M6 取 0.5）", "verified": "unverified", "note": "沉孔埋入餘量" },
-    { "screwSize": "M5", "feature": "counterbore_delta", "value": 0.5, "unit": "mm", "source": "內規", "sourceRef": "派工單 §3.3（M3–M6 取 0.5）", "verified": "unverified", "note": "沉孔埋入餘量" },
-    { "screwSize": "M6", "feature": "counterbore_delta", "value": 0.5, "unit": "mm", "source": "內規", "sourceRef": "派工單 §3.3（M3–M6 取 0.5）", "verified": "unverified", "note": "沉孔埋入餘量" },
-    { "screwSize": "M8", "feature": "counterbore_delta", "value": 1.0, "unit": "mm", "source": "內規", "sourceRef": "派工單 §3.3（M8 以上取 1.0）", "verified": "unverified", "note": "沉孔埋入餘量" }
+    {
+      "screwSize": "M3",
+      "feature": "through_fine",
+      "value": 3.2,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "細級，未查證",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M4",
+      "feature": "through_fine",
+      "value": 4.3,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "細級，未查證",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M5",
+      "feature": "through_fine",
+      "value": 5.3,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "細級，未查證",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M6",
+      "feature": "through_fine",
+      "value": 6.4,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "細級，未查證",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M8",
+      "feature": "through_fine",
+      "value": 8.4,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "細級，未查證",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M3",
+      "feature": "through_medium",
+      "value": 3.4,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M4",
+      "feature": "through_medium",
+      "value": 4.5,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M5",
+      "feature": "through_medium",
+      "value": 5.5,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M6",
+      "feature": "through_medium",
+      "value": 6.6,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M8",
+      "feature": "through_medium",
+      "value": 9.0,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M3",
+      "feature": "through_coarse",
+      "value": 3.6,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "粗級，未查證",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M4",
+      "feature": "through_coarse",
+      "value": 4.8,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "粗級，未查證",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M5",
+      "feature": "through_coarse",
+      "value": 5.8,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "粗級，未查證",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M6",
+      "feature": "through_coarse",
+      "value": 7.0,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "粗級，未查證",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M8",
+      "feature": "through_coarse",
+      "value": 10.0,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "粗級，未查證",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M3",
+      "feature": "tap_drill",
+      "value": 2.5,
+      "unit": "mm",
+      "threadEngagementPercent": 75,
+      "appliesTo": "all",
+      "source": "供應商目錄",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified",
+      "note": "非標準規定值。鋁材常用較大底孔，若內規分材質，本列拆為 appliesTo 各材質"
+    },
+    {
+      "screwSize": "M4",
+      "feature": "tap_drill",
+      "value": 3.3,
+      "unit": "mm",
+      "threadEngagementPercent": 75,
+      "appliesTo": "all",
+      "source": "供應商目錄",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified",
+      "note": "非標準規定值"
+    },
+    {
+      "screwSize": "M5",
+      "feature": "tap_drill",
+      "value": 4.2,
+      "unit": "mm",
+      "threadEngagementPercent": 75,
+      "appliesTo": "all",
+      "source": "供應商目錄",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified",
+      "note": "非標準規定值"
+    },
+    {
+      "screwSize": "M6",
+      "feature": "tap_drill",
+      "value": 5.0,
+      "unit": "mm",
+      "threadEngagementPercent": 75,
+      "appliesTo": "all",
+      "source": "供應商目錄",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified",
+      "note": "非標準規定值"
+    },
+    {
+      "screwSize": "M8",
+      "feature": "tap_drill",
+      "value": 6.8,
+      "unit": "mm",
+      "threadEngagementPercent": 75,
+      "appliesTo": "all",
+      "source": "供應商目錄",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified",
+      "note": "非標準規定值"
+    },
+    {
+      "screwSize": "M3",
+      "feature": "counterbore_clearance",
+      "value": 1.0,
+      "unit": "mm",
+      "source": "內規",
+      "sourceRef": "由派工單 §5 驗收條件反推（M6 無墊圈 → Ø11）",
+      "verified": "unverified",
+      "note": "沉孔徑讓隙"
+    },
+    {
+      "screwSize": "M4",
+      "feature": "counterbore_clearance",
+      "value": 1.0,
+      "unit": "mm",
+      "source": "內規",
+      "sourceRef": "由派工單 §5 驗收條件反推（M6 無墊圈 → Ø11）",
+      "verified": "unverified",
+      "note": "沉孔徑讓隙"
+    },
+    {
+      "screwSize": "M5",
+      "feature": "counterbore_clearance",
+      "value": 1.0,
+      "unit": "mm",
+      "source": "內規",
+      "sourceRef": "由派工單 §5 驗收條件反推（M6 無墊圈 → Ø11）",
+      "verified": "unverified",
+      "note": "沉孔徑讓隙"
+    },
+    {
+      "screwSize": "M6",
+      "feature": "counterbore_clearance",
+      "value": 1.0,
+      "unit": "mm",
+      "source": "內規",
+      "sourceRef": "由派工單 §5 驗收條件反推（M6 無墊圈 → Ø11）",
+      "verified": "unverified",
+      "note": "沉孔徑讓隙"
+    },
+    {
+      "screwSize": "M8",
+      "feature": "counterbore_clearance",
+      "value": 1.0,
+      "unit": "mm",
+      "source": "內規",
+      "sourceRef": "由派工單 §5 驗收條件反推（M6 無墊圈 → Ø11）",
+      "verified": "unverified",
+      "note": "沉孔徑讓隙"
+    },
+    {
+      "screwSize": "M3",
+      "feature": "counterbore_delta",
+      "value": 0.5,
+      "unit": "mm",
+      "source": "內規",
+      "sourceRef": "派工單 §3.3（M3–M6 取 0.5）",
+      "verified": "unverified",
+      "note": "沉孔埋入餘量：留給加工公差與表面處理，不是留給螺絲。ISO 4762 的頭高是單邊負公差，螺絲只會比公稱矮"
+    },
+    {
+      "screwSize": "M4",
+      "feature": "counterbore_delta",
+      "value": 0.5,
+      "unit": "mm",
+      "source": "內規",
+      "sourceRef": "派工單 §3.3（M3–M6 取 0.5）",
+      "verified": "unverified",
+      "note": "沉孔埋入餘量"
+    },
+    {
+      "screwSize": "M5",
+      "feature": "counterbore_delta",
+      "value": 0.5,
+      "unit": "mm",
+      "source": "內規",
+      "sourceRef": "派工單 §3.3（M3–M6 取 0.5）",
+      "verified": "unverified",
+      "note": "沉孔埋入餘量"
+    },
+    {
+      "screwSize": "M6",
+      "feature": "counterbore_delta",
+      "value": 0.5,
+      "unit": "mm",
+      "source": "內規",
+      "sourceRef": "派工單 §3.3（M3–M6 取 0.5）",
+      "verified": "unverified",
+      "note": "沉孔埋入餘量"
+    },
+    {
+      "screwSize": "M8",
+      "feature": "counterbore_delta",
+      "value": 1.0,
+      "unit": "mm",
+      "source": "內規",
+      "sourceRef": "派工單 §3.3（M8 以上取 1.0）",
+      "verified": "unverified",
+      "note": "沉孔埋入餘量"
+    },
+    {
+      "screwSize": "M10",
+      "feature": "through_fine",
+      "value": 10.5,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "細級，未查證",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M12",
+      "feature": "through_fine",
+      "value": 13.0,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "細級，未查證",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M10",
+      "feature": "through_medium",
+      "value": 11.0,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M12",
+      "feature": "through_medium",
+      "value": 13.5,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "派工單附錄（記憶值，未查證）",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M10",
+      "feature": "through_coarse",
+      "value": 12.0,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "粗級，未查證",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M12",
+      "feature": "through_coarse",
+      "value": 14.5,
+      "unit": "mm",
+      "source": "ISO 273",
+      "sourceRef": "粗級，未查證",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M10",
+      "feature": "tap_drill",
+      "value": 8.5,
+      "unit": "mm",
+      "threadEngagementPercent": 75,
+      "appliesTo": "all",
+      "source": "供應商目錄",
+      "sourceRef": "75% 牙高，未查證",
+      "verified": "unverified",
+      "note": "非標準規定值"
+    },
+    {
+      "screwSize": "M12",
+      "feature": "tap_drill",
+      "value": 10.2,
+      "unit": "mm",
+      "threadEngagementPercent": 75,
+      "appliesTo": "all",
+      "source": "供應商目錄",
+      "sourceRef": "75% 牙高，未查證",
+      "verified": "unverified",
+      "note": "非標準規定值"
+    },
+    {
+      "screwSize": "M10",
+      "feature": "counterbore_clearance",
+      "value": 1.0,
+      "unit": "mm",
+      "source": "內規",
+      "sourceRef": "與其他規格同值，未查證",
+      "verified": "unverified",
+      "note": "沉孔徑讓隙"
+    },
+    {
+      "screwSize": "M12",
+      "feature": "counterbore_clearance",
+      "value": 1.0,
+      "unit": "mm",
+      "source": "內規",
+      "sourceRef": "與其他規格同值，未查證",
+      "verified": "unverified",
+      "note": "沉孔徑讓隙"
+    },
+    {
+      "screwSize": "M10",
+      "feature": "counterbore_delta",
+      "value": 1.0,
+      "unit": "mm",
+      "source": "內規",
+      "sourceRef": "派工單 §3.3（M8 以上取 1.0）",
+      "verified": "unverified",
+      "note": "沉孔埋入餘量"
+    },
+    {
+      "screwSize": "M12",
+      "feature": "counterbore_delta",
+      "value": 1.0,
+      "unit": "mm",
+      "source": "內規",
+      "sourceRef": "派工單 §3.3（M8 以上取 1.0）",
+      "verified": "unverified",
+      "note": "沉孔埋入餘量"
+    }
   ]
 }

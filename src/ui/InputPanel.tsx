@@ -1,13 +1,15 @@
 /**
  * 區塊 1：輸入區。
  *
- * 前六欄順序固定：螺絲規格 → 墊圈 → 頭型 → 等級 → 上件板厚 t → 下件材質
- * 墊圈刻意排第二：它是唯一同時影響徑向（沉頭孔徑要讓開墊圈外徑）與軸向
- * （c_min 加上 w，連帶 G 減少、E 增加）的輸入，後面所有數字都依賴它。
- * 墊圈無預設值，必須強制選擇。
+ * 前六欄順序固定：螺絲規格 → 墊圈 → 頭型 → 等級 → 上件板厚 → 下件材質
+ * 墊圈刻意排第二：它是唯一同時影響徑向（沉孔徑要讓開墊圈外徑）與軸向
+ * （沉孔最小深度加上墊圈厚，連帶咬合深度改變）的輸入，後面所有數字都依賴它。
  *
- * 第七、八欄為選填（攻牙深 H、上件材質），排在既有六欄之後，不影響
- * 「≤5 個欄位輸入即見第一組建議」。
+ * 墊圈預設為「無」（甲方 2026-09-14 裁決）。派工單 §3.6 原本要求無預設、強制選擇，
+ * 理由是預設值會被沿用而不自覺：實際用了墊圈卻忘了改的人，會拿到偏小的沉孔徑
+ * 與偏大的咬合，而畫面上看不出異狀。甲方已知此風險並選擇便利性。
+ *
+ * 第七、八欄為選填（有效牙深、上件材質），排在既有六欄之後。
  */
 
 import type { Grade, Inputs, MaterialKey, ScrewSize, WasherKey } from '../core/types';
@@ -24,7 +26,7 @@ export type Draft = {
 
 export const INITIAL_DRAFT: Draft = {
   screwSize: 'M6',
-  washer: '', // 不得有預設值
+  washer: 'none', // 甲方 2026-09-14 裁決：預設為「無墊圈」
   grade: 'A2-70',
   plateThickness: '12',
   parentMaterial: 'S45C',
@@ -96,7 +98,7 @@ export function draftToInputs(d: Draft): DraftResult {
   };
 }
 
-const SIZES: ScrewSize[] = ['M3', 'M4', 'M5', 'M6', 'M8'];
+const SIZES: ScrewSize[] = ['M3', 'M4', 'M5', 'M6', 'M8', 'M10', 'M12'];
 const MATERIALS: MaterialKey[] = ['S45C', '6061-T6', 'SUS304'];
 
 export function InputPanel({
@@ -131,23 +133,18 @@ export function InputPanel({
         </div>
 
         <div className="field">
-          <label htmlFor="f-washer">
-            墊圈<span className="req">*</span>
-          </label>
+          <label htmlFor="f-washer">墊圈</label>
           <select
             id="f-washer"
-            className={draft.washer === '' ? 'unset' : ''}
+
             value={draft.washer}
             onChange={(e) => set('washer', e.target.value as WasherKey | '')}
           >
-            <option value="" disabled>
-              請選擇
-            </option>
             <option value="none">無</option>
             <option value="ISO7089">ISO 7089 平墊圈</option>
             <option value="ISO7092">ISO 7092 小外徑</option>
           </select>
-          <span className="hint">同時決定沉孔徑與咬合深度，必選</span>
+          <span className="hint">同時決定沉孔徑與咬合深度</span>
         </div>
 
         <div className="field">

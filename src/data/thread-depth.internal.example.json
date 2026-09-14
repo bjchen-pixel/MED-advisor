@@ -27,10 +27,61 @@
   "kind": "internal",
   "label": "範例檔，未經任何驗證，請勿直接改名使用",
   "rows": [
-    { "screwSize": "M3", "holeType": "blind", "clearanceMin": 99, "source": "內規", "sourceRef": "範例值，請替換", "verified": "unverified" },
-    { "screwSize": "M4", "holeType": "blind", "clearanceMin": 99, "source": "內規", "sourceRef": "範例值，請替換", "verified": "unverified" },
-    { "screwSize": "M5", "holeType": "blind", "clearanceMin": 99, "source": "內規", "sourceRef": "範例值，請替換", "verified": "unverified" },
-    { "screwSize": "M6", "holeType": "blind", "clearanceMin": 99, "source": "內規", "sourceRef": "範例值，請替換", "verified": "unverified" },
-    { "screwSize": "M8", "holeType": "blind", "clearanceMin": 99, "source": "內規", "sourceRef": "範例值，請替換", "verified": "unverified" }
+    {
+      "screwSize": "M3",
+      "holeType": "blind",
+      "clearanceMin": 99,
+      "source": "內規",
+      "sourceRef": "範例值，請替換",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M4",
+      "holeType": "blind",
+      "clearanceMin": 99,
+      "source": "內規",
+      "sourceRef": "範例值，請替換",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M5",
+      "holeType": "blind",
+      "clearanceMin": 99,
+      "source": "內規",
+      "sourceRef": "範例值，請替換",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M6",
+      "holeType": "blind",
+      "clearanceMin": 99,
+      "source": "內規",
+      "sourceRef": "範例值，請替換",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M8",
+      "holeType": "blind",
+      "clearanceMin": 99,
+      "source": "內規",
+      "sourceRef": "範例值，請替換",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M10",
+      "holeType": "blind",
+      "clearanceMin": 99,
+      "source": "內規",
+      "sourceRef": "範例值，請替換",
+      "verified": "unverified"
+    },
+    {
+      "screwSize": "M12",
+      "holeType": "blind",
+      "clearanceMin": 99,
+      "source": "內規",
+      "sourceRef": "範例值，請替換",
+      "verified": "unverified"
+    }
   ]
 }

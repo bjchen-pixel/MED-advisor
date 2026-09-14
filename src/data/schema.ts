@@ -4,7 +4,7 @@
 
 import { z } from 'zod';
 
-export const screwSize = z.enum(['M3', 'M4', 'M5', 'M6', 'M8']);
+export const screwSize = z.enum(['M3', 'M4', 'M5', 'M6', 'M8', 'M10', 'M12']);
 export const grade = z.enum(['A2-70', '12.9']);
 export const materialKey = z.enum(['S45C', '6061-T6', 'SUS304']);
 export const washerKey = z.enum(['none', 'ISO7089', 'ISO7092']);
