@@ -37,22 +37,62 @@ export function defaultGradeFor(size: ScrewSize): Grade {
   return size === 'M3' || size === 'M4' ? 'A2-70' : 'A2-70';
 }
 
-export function draftToInputs(d: Draft): Inputs | null {
-  if (d.washer === '') return null;
+export type DraftIssue = { field: string; message: string };
+export type DraftResult = { ok: true; inputs: Inputs } | { ok: false; issues: DraftIssue[] };
+
+/**
+ * 草稿 → Inputs。
+ *
+ * 回傳的是「哪一欄有問題」，不是一個 null。早先版本任何一欄無效都回 null，
+ * App 只好猜是哪一欄出錯——結果選填的「有效牙深」填 0 會讓整頁輸出消失，
+ * 而畫面上寫的是「請填上件板厚」，指到完全無關的欄位。
+ * 使用者看到的是「選了已知條件就沒有輸出」，而且沒有任何線索。
+ */
+export function draftToInputs(d: Draft): DraftResult {
+  const issues: DraftIssue[] = [];
+
+  if (d.washer === '') {
+    issues.push({
+      field: '墊圈',
+      message: '請先選墊圈——它同時決定沉孔徑與咬合深度，沒有它後面的數字都算不出來。',
+    });
+  }
+
   const t = Number(d.plateThickness);
-  if (!Number.isFinite(t) || t <= 0) return null;
-  const depth =
-    d.effectiveThreadDepth.trim() === '' ? undefined : Number(d.effectiveThreadDepth);
-  if (depth !== undefined && (!Number.isFinite(depth) || depth <= 0)) return null;
+  if (d.plateThickness.trim() === '') {
+    issues.push({ field: '上件板厚', message: '請填上件板厚。' });
+  } else if (!Number.isFinite(t) || t <= 0) {
+    issues.push({
+      field: '上件板厚',
+      message: `填了「${d.plateThickness}」，必須是大於 0 的數字。`,
+    });
+  }
+
+  const raw = d.effectiveThreadDepth.trim();
+  const depth = raw === '' ? undefined : Number(raw);
+  if (depth !== undefined && (!Number.isFinite(depth) || depth <= 0)) {
+    issues.push({
+      field: '有效牙深',
+      message:
+        `填了「${raw}」，必須是大於 0 的數字。` +
+        `這一欄是選填——孔還沒存在就留空，讓工具幫你算。`,
+    });
+  }
+
+  if (issues.length > 0) return { ok: false, issues };
+
   return {
-    screwSize: d.screwSize,
-    grade: d.grade,
-    headType: 'SHCS',
-    plateThickness: t,
-    washer: d.washer,
-    parentMaterial: d.parentMaterial,
-    effectiveThreadDepth: depth,
-    plateMaterial: d.plateMaterial === '' ? undefined : d.plateMaterial,
+    ok: true,
+    inputs: {
+      screwSize: d.screwSize,
+      grade: d.grade,
+      headType: 'SHCS',
+      plateThickness: t,
+      washer: d.washer as WasherKey,
+      parentMaterial: d.parentMaterial,
+      effectiveThreadDepth: depth,
+      plateMaterial: d.plateMaterial === '' ? undefined : d.plateMaterial,
+    },
   };
 }
 
@@ -135,7 +175,7 @@ export function InputPanel({
           <input
             id="f-t"
             type="number"
-            min="0"
+            min="0.1"
             step="0.1"
             value={draft.plateThickness}
             onChange={(e) => set('plateThickness', e.target.value)}
@@ -164,7 +204,7 @@ export function InputPanel({
           <input
             id="f-tap"
             type="number"
-            min="0"
+            min="0.5"
             step="0.5"
             value={draft.effectiveThreadDepth}
             placeholder={

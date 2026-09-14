@@ -17,7 +17,8 @@ export function App({ db }: { db: Database }) {
   const [draft, setDraft] = useState<Draft>(INITIAL_DRAFT);
   const [copied, setCopied] = useState(false);
 
-  const inputs = useMemo(() => draftToInputs(draft), [draft]);
+  const parsed = useMemo(() => draftToInputs(draft), [draft]);
+  const inputs = parsed.ok ? parsed.inputs : null;
 
   const computed = useMemo(() => {
     if (!inputs) return null;
@@ -80,13 +81,16 @@ export function App({ db }: { db: Database }) {
 
       <InputPanel draft={draft} onChange={setDraft} derivedThreadDepth={derivedThreadDepth} />
 
-      {!inputs && (
+      {!parsed.ok && (
         <section className="block">
-          <p className="empty">
-            {draft.washer === ''
-              ? '請先選「墊圈」——它同時決定沉孔徑與咬合深度，沒有它後面的數字都算不出來。'
-              : '請填上件板厚。'}
-          </p>
+          <div className="warnings">
+            {parsed.issues.map((i) => (
+              <div className="warn-item warn" key={i.field}>
+                <span className="lvl">{i.field}</span>
+                {i.message}
+              </div>
+            ))}
+          </div>
         </section>
       )}
 
